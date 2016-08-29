@@ -1,0 +1,2 @@
+ForestLiana.secret_key = 'b9dadf5b1b571357f00e114f0a2bfda82b632e64edc78abb0b707f4e56a0e4a0'
+ForestLiana.auth_key = 'oefr6Ly0ABesXiTQK9P2gQ'

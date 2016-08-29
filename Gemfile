@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'active_model_serializers'
+gem 'forest_liana'
 gem 'has_heartbeat'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
