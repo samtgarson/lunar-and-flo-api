@@ -7,14 +7,12 @@
 # Ignore bundler config.
 /.bundle
 
-/tmp
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
 
-
-# TODO Comment out this rule if environment variables can be committed
 .env
+
+.rubocop-https---*
