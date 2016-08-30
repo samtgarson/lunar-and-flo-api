@@ -21,6 +21,7 @@ end
 group :development do
   gem 'guard', require: false
   gem 'guard-minitest', require: false
+  gem 'tld_length'
 end
 
 group :test do
