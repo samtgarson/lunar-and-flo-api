@@ -19,7 +19,12 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.0.5'
+  gem 'guard', require: false
+  gem 'guard-minitest', require: false
+end
+
+group :test do
+  gem 'minitest-reporters'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   constraints subdomain: 'api', defaults: { format: :json } do
     scope module: 'api' do
       namespace :v1 do
-        resources :users, except: [:create]
+        resources :users, except: [:create, :index]
       end
     end
   end
