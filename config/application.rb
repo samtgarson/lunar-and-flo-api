@@ -17,14 +17,7 @@ require "rails/test_unit/railtie"
 Bundler.require(*Rails.groups)
 
 module LunarAndFlo
-  class Application < Rails::Application
-    config.middleware.insert_before 0, "Rack::Cors" do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
-      end
-    end
-    
+  class Application < Rails::Application    
     config.middleware.use Rack::Attack
     config.api_only = true
   end
