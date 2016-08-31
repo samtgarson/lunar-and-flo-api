@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 
 gem 'active_model_serializers'
 gem 'forest_liana'
+gem "interactor", "~> 3.0"
 gem 'jwt'
 gem 'devise'
 gem 'pg', '~> 0.18'
