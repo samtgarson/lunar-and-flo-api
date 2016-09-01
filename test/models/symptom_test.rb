@@ -15,7 +15,7 @@ class SymptomTest < ActiveSupport::TestCase
     top_symptom = create :symptom
     second_symptom = create :symptom
     third_symptom = create :symptom
-    other_symptom = create :symptom
+    create :symptom # fourth symptom
 
     3.times { user.check_ins.create symptom: top_symptom }
     2.times { user.check_ins.create symptom: second_symptom }

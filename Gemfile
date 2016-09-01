@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 gem 'active_model_serializers'
 gem 'forest_liana'
-gem "interactor", "~> 3.0"
+gem 'interactor', '~> 3.0'
 gem 'jwt'
 gem 'devise'
 gem 'pg', '~> 0.18'
@@ -22,6 +22,7 @@ end
 group :development do
   gem 'guard', require: false
   gem 'guard-minitest', require: false
+  gem 'guard-rubocop'
   gem 'tld_length'
 end
 

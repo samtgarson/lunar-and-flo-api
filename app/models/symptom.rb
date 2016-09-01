@@ -4,7 +4,7 @@ class Symptom < ApplicationRecord
 
   validates :name, :description, :symptom_group, presence: true
 
-  def self.for (user, limit: 3)
+  def self.for(user, limit: 3)
     select('symptoms.*, count(check_ins.id) AS check_ins_count')
       .joins(:check_ins)
       .where(check_ins: { user_id: user.id })

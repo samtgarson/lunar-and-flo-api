@@ -4,8 +4,9 @@ class CheckInController < ApplicationController
       render json: result.check_ins
     else
       render(
-        json: { error: 'Could not process symptoms', invalid_ids: result.failed_symptoms }, 
-        status: :unprocessable_entity)
+        json: { error: 'Could not process symptoms', invalid_ids: result.failed_symptoms },
+        status: :unprocessable_entity
+      )
     end
   end
 

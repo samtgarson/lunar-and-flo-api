@@ -1,6 +1,5 @@
 module Api::V1
   class UsersController < ApplicationController
-
     def show
       render json: user
     end
@@ -13,9 +12,7 @@ module Api::V1
       end
     end
 
-    def destroy
-      user.destroy
-    end
+    delegate :destroy, to: :user
 
     private
 
