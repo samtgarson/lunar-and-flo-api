@@ -3,8 +3,7 @@ class ProcessCheckIn
 
   def call
     if created_check_ins.all?(&:valid?)
-      created_check_ins.each(&:save)
-      context.check_ins = created_check_ins
+      context.check_ins = created_check_ins.each(&:save)
     else
       context.fail!(failed_symptoms: failed_check_ins)
     end
