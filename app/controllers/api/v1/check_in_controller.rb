@@ -4,7 +4,7 @@ class CheckInController < ApplicationController
       render json: result.check_ins
     else
       render(
-        json: { errors: [ 'Could not process symptoms' ], invalid_ids: result.failed_symptoms },
+        json: { errors: ['Could not process symptoms'], invalid_ids: result.failed_symptoms },
         status: :unprocessable_entity
       )
     end
@@ -13,10 +13,10 @@ class CheckInController < ApplicationController
   private
 
     def result
-      @result ||= ProcessCheckIn.call(check_in_params)
+      @result ||= CreateCheckIns.call(check_in_params)
     end
 
     def check_in_params
-      params.permit(:symptom_ids).merge(user: current_user)
+      params.permit(:symptom_ids).merge(user_id: current_user.id)
     end
 end

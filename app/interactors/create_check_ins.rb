@@ -1,5 +1,7 @@
-class ProcessCheckIn
+class CreateCheckIns
   include Interactor
+
+  context_requires :lat, :lng, user_id: String, symptom_ids: Array
 
   def call
     if created_check_ins.all?(&:valid?)
@@ -13,11 +15,15 @@ class ProcessCheckIn
 
     def created_check_ins
       @created_check_ins ||= context.symptom_ids.map do |symptom_id|
-        CheckIn.new(user: context.user, symptom_id: symptom_id)
+        CheckIn.new(user_id: context.user_id, symptom_id: symptom_id, location: location)
       end
     end
 
     def failed_check_ins
       context.symptom_ids - created_check_ins.select(&:valid?).map(&:symptom_id)
+    end
+
+    def location
+      @location ||= Location.create(lat: context.lat, lng: context.lng)
     end
 end
