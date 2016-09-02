@@ -11,6 +11,10 @@ class CreateNewCheckIns
     end
   end
 
+  def rollback
+    context.check_ins.each(&:destroy)
+  end
+
   private
 
     def created_check_ins
