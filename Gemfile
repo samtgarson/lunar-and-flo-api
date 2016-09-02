@@ -18,6 +18,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'rubocop', require: false
+  gem 'faker'
 end
 
 group :development do

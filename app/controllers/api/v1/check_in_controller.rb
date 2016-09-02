@@ -13,7 +13,7 @@ class CheckInController < ApplicationController
   private
 
     def result
-      @result ||= CreateCheckIns.call(check_in_params)
+      @result ||= CreateNewCheckIns.call(check_in_params)
     end
 
     def check_in_params

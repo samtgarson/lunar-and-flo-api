@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :symptom_group do
-    name 'MyString'
+    name { Faker::Hacker.abbreviation }
   end
 end

@@ -1,7 +1,7 @@
-class CreateCheckIns
+class CreateNewCheckIns
   include Interactor
 
-  context_requires :lat, :lng, user_id: String, symptom_ids: Array
+  context_requires user_id: String, symptom_ids: Array
 
   def call
     if created_check_ins.all?(&:valid?)
@@ -24,6 +24,10 @@ class CreateCheckIns
     end
 
     def location
-      @location ||= Location.create(lat: context.lat, lng: context.lng)
+      @location ||= Location.create(lat: context.lat, lng: context.lng) if location_present?
+    end
+
+    def location_present?
+      context.lat.present? && context.lng.present?
     end
 end
