@@ -12,17 +12,21 @@ module V1
     end
 
     def index
-      render json: current_user.check_ins
+      render json: user.check_ins
     end
 
     private
+
+      def user
+        @user ||= params[:user_id] == 'me' ? current_user : User.find(params[:user_id])
+      end
 
       def result
         @result ||= ProcessCheckIns.call(check_in_params)
       end
 
       def check_in_params
-        params.permit(symptom_ids: []).merge(user_id: current_user.id)
+        params.permit(symptom_ids: []).merge(user_id: user.id)
       end
   end
 end

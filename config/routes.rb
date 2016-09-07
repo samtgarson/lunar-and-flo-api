@@ -8,8 +8,9 @@ Rails.application.routes.draw do
 
   constraints subdomain: 'api', defaults: { format: :json } do
     api_version(module: 'V1', header: { name: 'Accept', value: 'application/vnd.lunarandflo.com; version=1' }, default: true) do
-      resources :users, except: [:create, :index]
-      resources :check_ins, only: [:create, :index]
+      resources :users, except: [:create, :index] do
+        resources :check_ins, only: [:create, :index]
+      end
     end
   end
 end
