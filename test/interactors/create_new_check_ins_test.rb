@@ -19,7 +19,7 @@ class CreateNewCheckInsTest < ActiveSupport::TestCase
   end
 
   test 'it provides check ins if symptoms are valid' do
-    assert_equal successful_context.check_ins.size, 1
+    assert_equal successful_context.check_in.check_in_symptoms.size, 1
   end
 
   test 'it fails if symptoms are invalid' do

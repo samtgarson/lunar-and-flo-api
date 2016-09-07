@@ -2,18 +2,27 @@ require 'test_helper'
 
 class CheckInsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @symptom1 = create :symptom
-    @symptom2 = create :symptom
     @user = create :user
-    @check_in_params = { symptom_ids: [@symptom1.id, @symptom2.id] }
+  end
+
+  def check_in_params
+    { symptom_ids: [create(:symptom).id, create(:symptom).id] }
   end
 
   test 'should create check ins' do
-    assert_difference('CheckIn.count', +2) do
-      auth_visit :post, v1_check_ins_url, params: @check_in_params
+    assert_difference('CheckInSymptom.count', +2) do
+      auth_visit :post, v1_check_ins_url, params: check_in_params
     end
 
-    assert_equal json_response['check_ins'].count, 2
+    assert_equal json_response['symptoms'].count, 2
+    assert_response :success
+  end
+
+  test 'should return the current user\'s check ins' do
+    2.times { @user.check_ins.create }
+    auth_visit :get, v1_check_ins_url
+
+    assert_equal json_response.count, 2
     assert_response :success
   end
 end

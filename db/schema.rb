@@ -10,19 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902105716) do
+ActiveRecord::Schema.define(version: 20160907154649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "check_ins", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "check_in_symptoms", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid     "check_in_id"
     t.uuid     "symptom_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["check_in_id"], name: "index_check_in_symptoms_on_check_in_id", using: :btree
+    t.index ["symptom_id"], name: "index_check_in_symptoms_on_symptom_id", using: :btree
+  end
+
+  create_table "check_ins", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.uuid     "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.uuid     "weather_report_id"
-    t.index ["symptom_id"], name: "index_check_ins_on_symptom_id", using: :btree
     t.index ["user_id"], name: "index_check_ins_on_user_id", using: :btree
     t.index ["weather_report_id"], name: "index_check_ins_on_weather_report_id", using: :btree
   end
@@ -80,7 +87,8 @@ ActiveRecord::Schema.define(version: 20160902105716) do
     t.datetime "updated_at",         null: false
   end
 
-  add_foreign_key "check_ins", "symptoms"
+  add_foreign_key "check_in_symptoms", "check_ins"
+  add_foreign_key "check_in_symptoms", "symptoms"
   add_foreign_key "check_ins", "users"
   add_foreign_key "check_ins", "weather_reports"
 end

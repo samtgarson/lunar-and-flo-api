@@ -4,27 +4,32 @@ class CreateNewCheckIns
   context_requires user_id: String, symptom_ids: Array
 
   def call
-    if created_check_ins.all?(&:valid?)
-      context.check_ins = created_check_ins.each(&:save)
+    if failed_check_in_symptoms.any?
+      context.fail!(failed_symptoms: failed_check_in_symptoms)
     else
-      context.fail!(failed_symptoms: failed_check_ins)
+      check_in_symptoms.each(&:save)
+      context.check_in = check_in
     end
   end
 
   def rollback
-    context.check_ins.each(&:destroy)
+    context.check_in_symptoms.each(&:destroy)
   end
 
   private
 
-    def created_check_ins
-      @created_check_ins ||= context.symptom_ids.map do |symptom_id|
-        CheckIn.new(user_id: context.user_id, symptom_id: symptom_id, location: location)
+    def check_in
+      @check_in ||= CheckIn.create(user_id: context.user_id, location: location)
+    end
+
+    def check_in_symptoms
+      @check_in_symptoms ||= context.symptom_ids.map do |symptom_id|
+        CheckInSymptom.new(check_in: check_in, symptom_id: symptom_id)
       end
     end
 
-    def failed_check_ins
-      context.symptom_ids - created_check_ins.select(&:valid?).map(&:symptom_id)
+    def failed_check_in_symptoms
+      @failed_check_in_symptoms ||= context.symptom_ids - check_in_symptoms.select(&:valid?).map(&:symptom_id)
     end
 
     def location

@@ -17,9 +17,11 @@ class SymptomTest < ActiveSupport::TestCase
     third_symptom = create :symptom
     create :symptom # fourth symptom
 
-    3.times { user.check_ins.create symptom: top_symptom }
-    2.times { user.check_ins.create symptom: second_symptom }
-    1.times { user.check_ins.create symptom: third_symptom }
+    check_in = create(:check_in, user: user)
+
+    3.times { check_in.check_in_symptoms.create symptom: top_symptom }
+    2.times { check_in.check_in_symptoms.create symptom: second_symptom }
+    1.times { check_in.check_in_symptoms.create symptom: third_symptom }
 
     assert_equal Symptom.for(user, limit: 2), [top_symptom, second_symptom]
   end
