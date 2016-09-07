@@ -1,5 +1,5 @@
 class ProcessCheckIns
   include Interactor::Organizer
 
-  organize CreateNewCheckIns
+  organize CreateCheckIn
 end

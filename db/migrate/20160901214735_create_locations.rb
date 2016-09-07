@@ -4,6 +4,8 @@ class CreateLocations < ActiveRecord::Migration[5.0]
       t.string :lat
       t.string :lng
       t.references :locatable, type: :uuid, polymorphic: true, index: true
+
+      t.timestamps
     end
   end
 end
