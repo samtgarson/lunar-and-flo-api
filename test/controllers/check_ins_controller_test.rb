@@ -11,7 +11,7 @@ class CheckInsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create check ins' do
     assert_difference('CheckInSymptom.count', +2) do
-      auth_visit :post, v1_check_ins_url, params: check_in_params
+      auth_visit :post, check_ins_url, params: check_in_params
     end
 
     assert_equal json_response['symptoms'].count, 2
@@ -20,7 +20,7 @@ class CheckInsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return the current user\'s check ins' do
     2.times { @user.check_ins.create }
-    auth_visit :get, v1_check_ins_url
+    auth_visit :get, check_ins_url
 
     assert_equal json_response.count, 2
     assert_response :success

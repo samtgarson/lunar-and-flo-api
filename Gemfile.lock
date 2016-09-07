@@ -220,11 +220,16 @@ GEM
       thread_safe (~> 0.1)
     unicode-display_width (1.1.0)
     useragent (0.16.7)
+    versionist (1.5.0)
+      activesupport (>= 3)
+      railties (>= 3)
+      yard (~> 0.7)
     warden (1.2.6)
       rack (>= 1.0)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    yard (0.9.5)
 
 PLATFORMS
   ruby
@@ -252,6 +257,7 @@ DEPENDENCIES
   rubocop
   tld_length
   tzinfo-data
+  versionist
 
 BUNDLED WITH
    1.12.5

@@ -1,4 +1,4 @@
-module Api::V1
+module V1
   class CheckInsController < ApplicationController
     def create
       if result.success?

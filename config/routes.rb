@@ -7,11 +7,9 @@ Rails.application.routes.draw do
   mount ForestLiana::Engine => '/forest'
 
   constraints subdomain: 'api', defaults: { format: :json } do
-    scope module: 'api' do
-      namespace :v1 do
-        resources :users, except: [:create, :index]
-        resources :check_ins, only: [:create, :index]
-      end
+    api_version(module: 'V1', header: { name: 'Accept', value: 'application/vnd.lunarandflo.com; version=1' }, default: true) do
+      resources :users, except: [:create, :index]
+      resources :check_ins, only: [:create, :index]
     end
   end
 end
