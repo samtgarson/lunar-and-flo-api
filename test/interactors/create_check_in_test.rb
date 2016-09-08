@@ -7,7 +7,7 @@ class CreateCheckInTest < ActiveSupport::TestCase
   end
 
   def successful_context
-    @successful_context ||= CreateCheckIn.call(user_id: @user.id, symptom_ids: [@symptom.id])
+    @successful_context ||= CreateCheckIn.call(user_id: @user.id, symptom_ids: [@symptom.id], lat: 1.0, lng: 1.0)
   end
 
   def unsuccessful_context
@@ -20,6 +20,8 @@ class CreateCheckInTest < ActiveSupport::TestCase
 
   test 'it provides check ins if symptoms are valid' do
     assert successful_context.check_in
+    assert successful_context.lat
+    assert successful_context.lng
   end
 
   test 'it fails if symptoms are invalid' do
@@ -27,6 +29,6 @@ class CreateCheckInTest < ActiveSupport::TestCase
   end
 
   test 'it provides invalid symptom ids if symptoms are invalid' do
-    assert_equal unsuccessful_context.failed_symptoms, ['invalid_id']
+    assert_equal unsuccessful_context.errors[:failed_symptoms], ['invalid_id']
   end
 end

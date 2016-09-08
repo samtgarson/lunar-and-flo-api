@@ -6,7 +6,7 @@ class CheckInsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def check_in_params
-    { symptom_ids: [create(:symptom).id, create(:symptom).id] }
+    { symptom_ids: [create(:symptom).id, create(:symptom).id], lat: 1.0, lng: 1.0 }
   end
 
   test 'should create check ins for another user' do
@@ -17,6 +17,8 @@ class CheckInsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_equal json_response['symptoms'].count, 2
+    assert json_response['lat']
+    assert json_response['weather_report']
     assert_response :success
   end
 
@@ -26,5 +28,12 @@ class CheckInsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal json_response.count, 2
     assert_response :success
+  end
+
+  test 'should return failed symptom ids' do
+    auth_visit :post, user_check_ins_url(user_id: @user.id), params: { symptom_ids: ['123'] }
+
+    assert_equal json_response['invalid_ids'], ['123']
+    assert_response :unprocessable_entity
   end
 end

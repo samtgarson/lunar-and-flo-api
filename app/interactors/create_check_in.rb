@@ -5,7 +5,7 @@ class CreateCheckIn
 
   def call
     if failed_check_in_symptoms.any?
-      context.fail!(failed_symptoms: failed_check_in_symptoms)
+      context.fail!(errors: { failed_symptoms: failed_check_in_symptoms })
     else
       check_in_symptoms.each(&:save)
       context.check_in = check_in
@@ -13,13 +13,13 @@ class CreateCheckIn
   end
 
   def rollback
-    context.check_in_symptoms.each(&:destroy)
+    context.check_in.destroy
   end
 
   private
 
     def check_in
-      @check_in ||= CheckIn.create(user_id: context.user_id, location: location)
+      @check_in ||= CheckIn.create(user_id: context.user_id, lat: context.lat, lng: context.lng)
     end
 
     def check_in_symptoms
@@ -30,13 +30,5 @@ class CreateCheckIn
 
     def failed_check_in_symptoms
       @failed_check_in_symptoms ||= context.symptom_ids - check_in_symptoms.select(&:valid?).map(&:symptom_id)
-    end
-
-    def location
-      @location ||= Location.create(lat: context.lat, lng: context.lng) if location_present?
-    end
-
-    def location_present?
-      context.lat.present? && context.lng.present?
     end
 end

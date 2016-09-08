@@ -2,12 +2,14 @@
 source 'https://rubygems.org'
 
 gem 'active_model_serializers'
+gem 'devise'
+gem 'forecast_io'
 gem 'forest_liana'
 gem 'geokit-rails'
 gem 'interactor', '~> 3.0', github: 'yjukaku/interactor', branch: 'interactor-requirements'
 gem 'jwt'
-gem 'devise'
 gem 'pg', '~> 0.18'
+gem 'plissken'
 gem 'puma', '~> 3.0'
 gem 'rack-attack'
 gem 'rack-cors'
@@ -15,11 +17,12 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'versionist'
 
 group :development, :test do
-  gem 'factory_girl_rails', '~> 4.0'
   gem 'dotenv-rails'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'faker'
+  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop', require: false
-  gem 'faker'
 end
 
 group :development do
@@ -30,7 +33,9 @@ group :development do
 end
 
 group :test do
+  gem 'm', '~> 1.5.0'
   gem 'minitest-reporters'
+  gem 'webmock'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

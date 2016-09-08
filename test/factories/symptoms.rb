@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :symptom do
-    name 'MyString'
-    description 'MyString'
+    name { Faker::StarWars.planet }
+    description { Faker::StarWars.quote }
     symptom_group
   end
 end

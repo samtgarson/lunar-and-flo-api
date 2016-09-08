@@ -5,7 +5,7 @@ module V1
         render json: result.check_in
       else
         render(
-          json: { errors: ['Could not process symptoms'], invalid_ids: result.failed_symptoms },
+          json: { errors: ['Could not process symptoms'], invalid_ids: result.errors[:failed_symptoms] },
           status: :unprocessable_entity
         )
       end
@@ -22,11 +22,11 @@ module V1
       end
 
       def result
-        @result ||= ProcessCheckIns.call(check_in_params)
+        @result ||= ProcessCheckIn.call(check_in_params)
       end
 
       def check_in_params
-        params.permit(symptom_ids: []).merge(user_id: user.id)
+        params.permit(:lat, :lng, symptom_ids: []).merge(user_id: user.id)
       end
   end
 end
