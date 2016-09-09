@@ -12,7 +12,7 @@ module V1
     end
 
     def index
-      render json: user.check_ins
+      paginate json: user.check_ins
     end
 
     private
