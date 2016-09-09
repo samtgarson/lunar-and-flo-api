@@ -1,6 +1,5 @@
-module Api::V1
+module V1
   class UsersController < ApplicationController
-
     def show
       render json: user
     end
@@ -9,13 +8,11 @@ module Api::V1
       if user.update(user_params)
         render json: user
       else
-        render json: user.errors, status: :unprocessable_entity
+        render json: { errors: user.errors }, status: :unprocessable_entity
       end
     end
 
-    def destroy
-      user.destroy
-    end
+    delegate :destroy, to: :user
 
     private
 

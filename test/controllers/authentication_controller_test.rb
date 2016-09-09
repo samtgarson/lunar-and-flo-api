@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AuthenticationControllerst < ActionDispatch::IntegrationTest
+class AuthenticationControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = create(:user)
   end
