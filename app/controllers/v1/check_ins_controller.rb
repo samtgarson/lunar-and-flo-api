@@ -15,7 +15,15 @@ module V1
       paginate json: user.check_ins
     end
 
+    def show
+      render json: check_in
+    end
+
     private
+
+      def check_in
+        CheckIn.find(params[:id])
+      end
 
       def user
         @user ||= params[:user_id] == 'me' ? current_user : User.find(params[:user_id])

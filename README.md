@@ -1,24 +1,39 @@
-# README
+# Lunar & Flo API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![CircleCI](https://circleci.com/gh/samtgarson/lunar-and-flo/tree/master.svg?style=svg&circle-token=773c6e5d936a4587ccff771b00af5c7d855817aa)](https://circleci.com/gh/samtgarson/lunar-and-flo/tree/master)
 
-Things you may want to cover:
+## Documentation
 
-* Ruby version
+View the [API Blueprint](/apiary.apib) or view the [hosted docs](docs.lunarandflo.apiary.io).
 
-* System dependencies
+## Admin
 
-* Configuration
+We use [Forest Admin](https://app.forestadmin.com) to manage this application.
 
-* Database creation
+## Develop
 
-* Database initialization
+- **Config**
+    - The following environment variables are available:
+        - `FORECAST_API_KEY` - our API key for Forecast.io
+        - `FOREST_SECRET_KEY` - Enviroment Key for Forest Admin
+        - `FOREST_AUTH_KEY` - Auth Key for Forest Admin
 
-* How to run the test suite
+- **Database**
+    - This app uses _postgres_. Homebrew is the suggested installation method on a Mac.
 
-* Services (job queues, cache servers, search engines, etc.)
+- **Environment**
+    - This app uses _.env_ to load up environment variables in development. Run `cp .env.test .env`
+    - `bundle install`
+    - `bundle exec rake db:setup`
 
-* Deployment instructions
+- **Testing**
+    - This app uses Minitest and the [m gem](https://github.com/qrush/m). 
+        - `bundle exec rake db:test:prepare`
+        - `bundle exec m`
+    - Ensure code passes Rubocop. Run `bundle exec rubocop`
 
-* ...
+- **Deploy**
+    - We deploy to Heroku.
+    - After passing CI, the Develop branch is deployed automatically to Staging
+    - After passing CI, the Master branch is deployed automatically to Production
+    - New Pull Requests get Review apps automatically created for them
