@@ -1,6 +1,8 @@
 class Symptom < ApplicationRecord
   belongs_to :symptom_group
   has_many :check_in_symptoms, dependent: :destroy
+  has_many :supplements, through: :supplement_symptom
+  has_many :supplement_symptom
 
   validates :name, :description, :symptom_group, presence: true
 

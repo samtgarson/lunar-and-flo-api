@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908141845) do
+ActiveRecord::Schema.define(version: 20160910154532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160908141845) do
     t.uuid     "symptom_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["check_in_id", "symptom_id"], name: "index_check_in_symptoms_on_check_in_id_and_symptom_id", unique: true, using: :btree
     t.index ["check_in_id"], name: "index_check_in_symptoms_on_check_in_id", using: :btree
     t.index ["symptom_id"], name: "index_check_in_symptoms_on_symptom_id", using: :btree
   end
@@ -34,6 +35,21 @@ ActiveRecord::Schema.define(version: 20160908141845) do
     t.float    "lng"
     t.index ["user_id"], name: "index_check_ins_on_user_id", using: :btree
     t.index ["weather_report_id"], name: "index_check_ins_on_weather_report_id", using: :btree
+  end
+
+  create_table "supplement_symptoms", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid "supplement_id"
+    t.uuid "symptom_id"
+    t.index ["supplement_id", "symptom_id"], name: "index_supplement_symptoms_on_supplement_id_and_symptom_id", unique: true, using: :btree
+    t.index ["supplement_id"], name: "index_supplement_symptoms_on_supplement_id", using: :btree
+    t.index ["symptom_id"], name: "index_supplement_symptoms_on_symptom_id", using: :btree
+  end
+
+  create_table "supplements", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "symptom_groups", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -86,5 +102,7 @@ ActiveRecord::Schema.define(version: 20160908141845) do
   add_foreign_key "check_in_symptoms", "symptoms"
   add_foreign_key "check_ins", "users"
   add_foreign_key "check_ins", "weather_reports"
+  add_foreign_key "supplement_symptoms", "supplements"
+  add_foreign_key "supplement_symptoms", "symptoms"
   add_foreign_key "symptoms", "symptom_groups"
 end
