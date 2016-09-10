@@ -2,6 +2,10 @@
 
 [![CircleCI](https://circleci.com/gh/samtgarson/lunar-and-flo/tree/master.svg?style=svg&circle-token=773c6e5d936a4587ccff771b00af5c7d855817aa)](https://circleci.com/gh/samtgarson/lunar-and-flo/tree/master)
 
+## Documentation
+
+View the [API Blueprint](/apiary.apib) or view the [hosted docs](docs.lunarandflo.apiary.io).
+
 ## Admin
 
 We use [Forest Admin](https://app.forestadmin.com) to manage this application.
