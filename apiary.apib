@@ -1,0 +1,151 @@
+FORMAT: 1A
+
+# Lunar & Flo
+
+Lunar & Flo API enabling interaction with the L&F server.
+
+## Data Structures
+
+### User
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
++ email: `test@example.com` (string, required)
++ name: `Joe Bloggs` (string)
+
+### Check In
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
++ lat: `51.507351` (number) - Latitude at time of check in
++ lng: `-0.127758` (number) - Longitude at time of check in
++ symptoms (array[Symptom]) - Array of selected symptoms
++ weather_report (Weather Report) - Attached weather and moon data
+
+### Symptom
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
+
+### Weather Report
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
+
+## Heartbeat [/heartbeat]
+
+Check the API's pulse.
+
+### Check Heartbeat [GET]
+
++ Response 200 (application/json)
+
+        {
+            "hearbeat": "beep boop"
+        }
+
+
+## Authentication [/auth]
+
+### Authenticate User [POST]
+
+Post to this action to login. 
+It accepts a user's email and password, and returns a JWT which must be attached in the Authorization header of every subsequent request (except `heartbeat`).
+
++ Request (application/json)
+
+        {
+            "email": "test@example.com",
+            "password": "password"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "auth_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjZkMDU2ZjMtMTkwZS00ZTQ2LTllNjMtMWI3MTYxMjJlMjg4In0.G-LSkJg8AhpdXEEAakjcQNdFxXse4et8uwdFNvZwU4o",
+            "user": {
+                "id": "26d056f3-190e-4e46-9e63-1b716122e288",
+                "email": "test@example.com"
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "Invalid Username/Password"
+            ]
+        }
+
+## Users [/users/{user_id}]
+
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string) - The ID of the user (or `me`)
+    
++ Attributes(User)
+
+### Me [GET]
+
+Get the current user.
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+    
+### Update [PUT]
+
+Update the current user
+
++ Request (application/json)
+
+    + Attributes (User)
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+        
+## Check Ins [/users/{user_id}/check_ins]
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string) - The ID of the user (or `me`)
+
++ Attributes (Check In)
+
+### All user check ins [GET]
+
+List all user check ins.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Check In])
+    
+### Create check in [POST]
+
+Create a check in for a user
+
++ Request
+    
+    + Attributes
+        
+        + symptom_ids (array[string], required) - An array of Symptom IDs the user has selected
+        + lat: `51.507351` (number) - Latitude at time of check in
+        + lng: `-0.127758` (number) - Longitude at time of check in
+
++ Response 201 (application/json)
+
+    + Attributes (Check In)
+        
+### View check in [GET /users/{user_id}/check_ins/{check_in_id}]
+
+Get a single check in
+
++ Request (application/json)
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string) - The ID of the user (or `me`)
+
+    + check_in_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string) - The ID of the check in
+
++ Response 200 (application/json)
+
+    + Attributes (Check In)
