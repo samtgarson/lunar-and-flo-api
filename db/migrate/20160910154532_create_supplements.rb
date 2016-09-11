@@ -7,12 +7,13 @@ class CreateSupplements < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    create_table :supplement_symptoms, id: :uuid do |t|
-      t.references :supplement, type: :uuid, foreign_key: true
-      t.references :symptom, type: :uuid, foreign_key: true
+    create_table :effects, id: :uuid do |t|
+      t.integer :effectiveness_days, default: 30
+      t.references :supplement, type: :uuid, foreign_key: true, index: true
+      t.references :symptom, type: :uuid, foreign_key: true, index: true
     end
 
-    add_index :supplement_symptoms, [:supplement_id, :symptom_id], unique: true
+    add_index :effects, [:supplement_id, :symptom_id], unique: true
     add_index :check_in_symptoms, [:check_in_id, :symptom_id], unique: true
   end
 end
