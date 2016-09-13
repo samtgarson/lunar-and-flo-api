@@ -9,6 +9,8 @@ class CheckIn < ApplicationRecord
 
   acts_as_mappable
 
+  scope :on_day, -> (time) { where("date_trunc('day', created_at) = ?", time.to_date) }
+
   def location?
     lat.present? && lng.present?
   end

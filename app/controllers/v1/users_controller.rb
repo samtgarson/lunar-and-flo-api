@@ -16,10 +16,6 @@ module V1
 
     private
 
-      def user
-        @user ||= params[:id] == 'me' ? current_user : User.find(params[:id])
-      end
-
       def user_params
         params.require(:user).permit(:name, :email)
       end

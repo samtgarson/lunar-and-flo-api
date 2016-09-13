@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CheckInsControllerTest < ActionDispatch::IntegrationTest
+class V1::CheckInsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = create :user
   end
