@@ -12,17 +12,7 @@ class SymptomTest < ActiveSupport::TestCase
 
   test '#for returns the correct symptoms' do
     user = create :user
-    top_symptom = create :symptom
-    second_symptom = create :symptom
-    third_symptom = create :symptom
-    create :symptom # fourth symptom
-
-    check_ins = create_list(:check_in, 3, user: user)
-
-    3.times { |n| check_ins[n].check_in_symptoms.create symptom: top_symptom }
-    2.times { |n| check_ins[n].check_in_symptoms.create symptom: second_symptom }
-    1.times { |n| check_ins[n].check_in_symptoms.create symptom: third_symptom }
-
-    assert_equal Symptom.for(user, limit: 2), [top_symptom, second_symptom]
+    symptoms = generate_check_ins(3, user)
+    assert_equal Symptom.for(user, limit: 2).to_a, [symptoms[0], symptoms[1]]
   end
 end

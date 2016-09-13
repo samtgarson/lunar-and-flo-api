@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :pack do
-    user nil
+    effects { build_list :effect, 3 }
   end
 end
