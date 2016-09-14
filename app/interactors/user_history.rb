@@ -18,7 +18,7 @@ class UserHistory
     end
 
     def days
-      @days ||= from..to
+      @days ||= (from..to).to_a.reverse
     end
 
     def from

@@ -4,17 +4,21 @@ class V1::HistoryControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = create :user
     @symptom = create :symptom
-    @check_ins = [3.days.ago, 1.day.ago].map { |d| create(:check_in, user: @user, created_at: d) }
+    @check_in = create(:check_in, user: @user, created_at: 1.day.ago)
   end
 
-  test 'should get history between dates' do
-    auth_visit :get, user_history_url(from: 1.week.ago, user_id: @user.id)
-    days = (1..3).map { |d| d.days.ago.strftime(UserHistory::DATE_FORMAT) }
-    empty_days = days.values_at(1, 3)
-    full_days = days.values_at(2)
+  test 'should get recent history' do
+    auth_visit :get, user_history_url(user_id: @user.id)
 
-    empty_days.each { |d| assert_equal json_response[d], nil }
-    full_days.each_with_index { |d, i| assert_equal json_response[d], CheckInSerializer.new(@check_ins[i]).as_json.stringify_keys }
+    assert_not json_response[2.days.ago.strftime(UserHistory::DATE_FORMAT)]
+    assert_equal json_response[1.day.ago.strftime(UserHistory::DATE_FORMAT)], CheckInSerializer.new(@check_in).as_json.stringify_keys
     assert_response :success
+  end
+
+  test 'it provides a month from a date' do
+    auth_visit :get, user_history_url(user_id: @user.id, before: 3.months.ago)
+
+    assert_equal json_response.keys.first, 3.months.ago.strftime(UserHistory::DATE_FORMAT)
+    assert_equal json_response.keys.last, (4.months.ago + 1.day).strftime(UserHistory::DATE_FORMAT)
   end
 end

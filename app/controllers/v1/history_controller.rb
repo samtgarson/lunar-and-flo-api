@@ -10,7 +10,7 @@ class V1::HistoryController < ApplicationController
   private
 
     def result
-      @result ||= UserHistory.call(user: user, from: from, to: to)
+      @result ||= UserHistory.call(user: user, to: before, from: before - 1.month + 1.day)
     end
 
     def serialized_history
@@ -21,11 +21,7 @@ class V1::HistoryController < ApplicationController
       @history ||= result.history
     end
 
-    def from
-      @from ||= params[:from] || 1.month.ago
-    end
-
-    def to
-      @to ||= params[:to] || Time.current
+    def before
+      @before ||= (params[:before] || Time.current).to_date
     end
 end
