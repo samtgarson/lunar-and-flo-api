@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :users, except: [:create, :index] do
         resources :check_ins, only: [:create, :index, :show]
         get 'history', to: 'history#index'
+        resources :packs, only: [:show, :index]
       end
     end
   end
