@@ -10,4 +10,12 @@ class ApplicationController < ActionController::API
     Rails.logger.info 'Heartbeat: beep boop.'
     render json: { hearbeat: 'beep boop' }, status: 200
   end
+
+  def user
+    @user ||= user_param == 'me' ? current_user : User.find(user_param)
+  end
+
+  def user_param
+    @user_param ||= params[:user_id] || params[:id]
+  end
 end

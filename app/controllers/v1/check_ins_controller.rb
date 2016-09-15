@@ -25,10 +25,6 @@ module V1
         CheckIn.find(params[:id])
       end
 
-      def user
-        @user ||= params[:user_id] == 'me' ? current_user : User.find(params[:user_id])
-      end
-
       def result
         @result ||= ProcessCheckIn.call(check_in_params)
       end
