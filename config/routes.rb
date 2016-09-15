@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         get 'history', to: 'history#index'
         resources :packs, only: [:show, :index]
       end
+      resources :supplements, only: [:show, :index]
     end
   end
 end

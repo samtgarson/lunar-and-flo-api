@@ -1,5 +1,5 @@
 class SupplementSerializer < ActiveModel::Serializer
   attributes :id, :description, :name
 
-  has_many :symptoms
+  has_many :effects
 end

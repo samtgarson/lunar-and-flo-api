@@ -196,7 +196,7 @@ List a user's packs in descending chronological order.
 
     + Attributes (array[Pack])
 
-### View check in [GET /users/{user_id}/packs/{pack_id}]
+### View pack [GET /users/{user_id}/packs/{pack_id}]
 
 Get a single pack
 
@@ -209,6 +209,30 @@ Get a single pack
 + Response 200 (application/json)
 
     + Attributes (Pack)
+
+## Supplements [/supplements]
+
++ Attributes (Supplement)
+
+### All supplements [GET]
+
+List all supplements.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Supplement])
+        
+### View supplement [GET /supplements/{supplement_id}]
+
+Get a single supplement
+
++ Parameters
+
+    + supplement_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the supplement
+
++ Response 200 (application/json)
+
+    + Attributes (Supplement)
 
 ## Data Structures
 
@@ -242,14 +266,17 @@ Get a single pack
 ### Supplement
 
 + Supplement Base
-+ effects (array[Effect]) - Effects that this supplement has
++ effects (array[Effect Base]) - Effects that this supplement has
+
+### Effect Base
+
++ effectiveness_days: `21` (number, required) - The number of days this supplement requires to notice effect, on average
++ symptom (Symptom) - The symptom this supplement effects
 
 ### Effect
 
-+ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
-+ effectiveness_days: `21` (number, required) - The number of days this supplement requires to notice effect, on average
++ Effect Base
 + supplement (Supplement Base) - The supplement this effect is describing
-+ symptom (Symptom) - The symptom this supplement effects
 
 ### Pack
 
