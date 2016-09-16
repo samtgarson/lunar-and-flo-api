@@ -1,6 +1,7 @@
 # Lunar & Flo API
 
-[![CircleCI](https://circleci.com/gh/samtgarson/lunar-and-flo/tree/master.svg?style=svg&circle-token=773c6e5d936a4587ccff771b00af5c7d855817aa)](https://circleci.com/gh/samtgarson/lunar-and-flo/tree/master)
+[![CircleCI](https://circleci.com/gh/samtgarson/lunar-and-flo-api.svg?style=svg&circle-token=773c6e5d936a4587ccff771b00af5c7d855817aa)](https://circleci.com/gh/samtgarson/lunar-and-flo-api) [![codecov](https://codecov.io/gh/samtgarson/lunar-and-flo-api/branch/development/graph/badge.svg?token=ttCpK0xxa6)](https://codecov.io/gh/samtgarson/lunar-and-flo-api)
+
 
 ## Documentation
 
