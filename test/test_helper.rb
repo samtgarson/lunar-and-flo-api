@@ -17,6 +17,7 @@ class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
   include RequestHelpers
   include MockHelpers
+  include CheckInHelpers
 
   setup do
     mock_http
