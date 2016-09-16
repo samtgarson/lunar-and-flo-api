@@ -36,4 +36,12 @@ class V1::CheckInsControllerTest < ActionDispatch::IntegrationTest
     assert_equal json_response['invalid_ids'], ['123']
     assert_response :unprocessable_entity
   end
+
+  test 'should return a specific check in' do
+    check_in = @user.check_ins.create
+    auth_visit :get, user_check_in_url(user_id: @user.id, id: check_in.id)
+
+    assert_equal json_response['id'], check_in.id
+    assert_response :success
+  end
 end

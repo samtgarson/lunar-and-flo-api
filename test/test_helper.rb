@@ -1,6 +1,20 @@
 ENV['RAILS_ENV'] ||= 'test'
+
+require 'simplecov'
+require 'codecov'
+if ENV['CIRCLE_ARTIFACTS']
+  dir = File.join(ENV['CIRCLE_ARTIFACTS'], 'coverage')
+  SimpleCov.coverage_dir(dir)
+end
+SimpleCov.start 'rails' do
+  add_group 'Interactors', 'app/interactors'
+  add_group 'Serializers', 'app/serializers'
+end
+SimpleCov.formatter = SimpleCov::Formatter::Codecov
+
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+
 require 'webmock/minitest'
 WebMock.disable_net_connect!(allow_localhost: true)
 

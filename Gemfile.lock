@@ -60,6 +60,10 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.2)
     byebug (9.0.5)
+    codecov (0.1.5)
+      json
+      simplecov
+      url
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     crack (0.4.3)
@@ -70,6 +74,7 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    docile (1.1.5)
     dotenv (2.1.1)
     dotenv-rails (2.1.1)
       dotenv (= 2.1.1)
@@ -232,6 +237,11 @@ GEM
     ruby_dep (1.4.0)
     safe_yaml (1.0.4)
     shellany (0.0.1)
+    simplecov (0.12.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     slop (3.6.0)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
@@ -247,6 +257,7 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicode-display_width (1.1.0)
+    url (0.3.2)
     useragent (0.16.7)
     versionist (1.5.0)
       activesupport (>= 3)
@@ -269,6 +280,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   api-pagination
+  codecov
   devise
   dotenv-rails
   factory_girl_rails (~> 4.0)
@@ -293,6 +305,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.0.0, >= 5.0.0.1)
   rubocop
+  simplecov
   tld_length
   tzinfo-data
   versionist

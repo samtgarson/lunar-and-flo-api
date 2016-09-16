@@ -35,8 +35,10 @@ group :development do
 end
 
 group :test do
+  gem 'codecov', require: false
   gem 'm', '~> 1.5.0'
   gem 'minitest-reporters'
+  gem 'simplecov', require: false
   gem 'webmock'
 end
 
