@@ -1,6 +1,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
+require 'codecov'
 if ENV['CIRCLE_ARTIFACTS']
   dir = File.join(ENV['CIRCLE_ARTIFACTS'], 'coverage')
   SimpleCov.coverage_dir(dir)
@@ -9,6 +10,7 @@ SimpleCov.start 'rails' do
   add_group 'Interactors', 'app/interactors'
   add_group 'Serializers', 'app/serializers'
 end
+SimpleCov.formatter = SimpleCov::Formatter::Codecov
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
