@@ -37,6 +37,7 @@ end
 group :test do
   gem 'm', '~> 1.5.0'
   gem 'minitest-reporters'
+  gem 'simplecov', require: false
   gem 'webmock'
 end
 
