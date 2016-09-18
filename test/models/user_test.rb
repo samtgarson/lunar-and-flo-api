@@ -12,21 +12,20 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should provide latest pack' do
-    create(:pack, user: @user, created_at: 2.weeks.ago)
-    new_pack = create(:pack, user: @user, created_at: 1.week.ago)
+    packs = create_packs @user, [2.weeks.ago, 1.week.ago]
 
-    assert_equal @user.latest_pack, new_pack
+    assert_equal @user.latest_pack, packs.last
   end
 
   test 'should provide users who need a new pack' do
-    other_user = create(:user)
-
-    create(:pack, user: @user, created_at: 1.month.ago)
-    create(:pack, user: @user, created_at: 2.months.ago)
-
-    create(:pack, user: other_user, created_at: 1.month.ago)
-    create(:pack, user: other_user, created_at: 2.weeks.ago)
+    @other_user = create(:user)
+    create_packs @user, [1.month.ago, 2.months.ago]
+    create_packs @other_user, [1.month.ago, 2.weeks.ago]
 
     assert_equal User.needs_new_pack, [@user]
+  end
+
+  def create_packs(user, dates = [Time.current])
+    dates.map { |date| create :pack, user: user, created_at: date }
   end
 end
