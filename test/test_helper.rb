@@ -32,6 +32,7 @@ class ActiveSupport::TestCase
   include RequestHelpers
   include MockHelpers
   include CheckInHelpers
+  include TaskHelpers
 
   setup do
     mock_http
