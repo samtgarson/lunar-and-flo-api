@@ -18,6 +18,9 @@ require 'rails/test_help'
 require 'webmock/minitest'
 WebMock.disable_net_connect!(allow_localhost: true)
 
+require 'sidekiq/testing'
+Sidekiq::Testing.inline!
+
 Dir[Rails.root.join('test/support/**/*.rb')].each { |f| require f }
 
 require 'minitest/reporters'

@@ -1,0 +1,2 @@
+namespace :generate do
+end

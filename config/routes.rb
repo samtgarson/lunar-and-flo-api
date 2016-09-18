@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get :heartbeat, to: 'application#heartbeat'
   post 'auth' => 'authentication#authenticate_user'
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
   mount ForestLiana::Engine => '/forest'
 
   constraints subdomain: 'api', defaults: { format: :json } do
