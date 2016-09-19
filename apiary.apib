@@ -5,6 +5,29 @@ HOST: http://api.lunarandflo.com
 
 Lunar & Flo API enabling interaction with the L&F server.
 
+## Client Authentication
+
+Use API Keys to authenticate your client to use this API. **TODO**
+
+## Versioning
+
+Use the `Accept` header to specify which version of a resource you require. E.g.:
+
+`Accept=application/vnd.lunarandflo.api+json; version=1`
+
+_Currently version 1 is the default and only version, so no versioning header is required._
+
+## Pagination
+
+Resource indexes are paginated using headers: 
+
+- `Link` will give relevant links to next, previous, first and last pages of this resource
+- `Page` will give the current page
+- `Per-Page` will give the number of items per page
+- `Total` will give the total number of pages for this resource.
+
+Use `page` and `per-page` params to change these values.
+
 ## Heartbeat [/heartbeat]
 
 Check the API's pulse.
