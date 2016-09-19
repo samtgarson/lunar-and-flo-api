@@ -284,11 +284,10 @@ Get a single supplement
 
 + id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
 + name: `Magnesium` (string, required)
-+ description: `Regular headaches.` (string, required)
++ description: `Contributes to the maintenance of normal bones and teeth. Magnesium also contributes to the reduction of tiredness and fatigue.` (string, required)
 
-### Supplement
+### Supplement (Supplement Base)
 
-+ Supplement Base
 + effects (array[Effect Base]) - Effects that this supplement has
 
 ### Effect Base
@@ -296,9 +295,8 @@ Get a single supplement
 + effectiveness_days: `21` (number, required) - The number of days this supplement requires to notice effect, on average
 + symptom (Symptom) - The symptom this supplement effects
 
-### Effect
+### Effect (Effect Base)
 
-+ Effect Base
 + supplement (Supplement Base) - The supplement this effect is describing
 
 ### Pack
