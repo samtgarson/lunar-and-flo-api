@@ -10,7 +10,7 @@ SimpleCov.start 'rails' do
   add_group 'Interactors', 'app/interactors'
   add_group 'Serializers', 'app/serializers'
 end
-SimpleCov.formatter = SimpleCov::Formatter::Codecov
+SimpleCov.formatter = SimpleCov::Formatter::Codecov if ENV['CODECOV_TOKEN']
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -32,6 +32,7 @@ class ActiveSupport::TestCase
   include RequestHelpers
   include MockHelpers
   include CheckInHelpers
+  include TaskHelpers
 
   setup do
     mock_http

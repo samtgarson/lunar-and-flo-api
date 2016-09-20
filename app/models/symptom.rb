@@ -6,11 +6,13 @@ class Symptom < ApplicationRecord
 
   validates :name, :description, :symptom_group, presence: true
 
-  def self.for(user, limit: 3)
-    joins(check_in_symptoms: :check_in)
-      .where(check_in_symptoms: { check_ins: { user_id: user.id } })
-      .group('symptoms.id')
-      .order('count(check_in_symptoms.check_in_id) DESC')
-      .limit(limit)
+  class << self
+    def for(user, limit: 3)
+      joins(check_in_symptoms: :check_in)
+        .where(check_in_symptoms: { check_ins: { user_id: user.id } })
+        .group('symptoms.id')
+        .order('count(check_in_symptoms.check_in_id) DESC')
+        .limit(limit)
+    end
   end
 end

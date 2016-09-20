@@ -6,6 +6,7 @@ class GeneratePack
   delegate :user, to: :context
 
   def call
+    context.fail!(errors: ["User #{context.user.id} needs at least one check in."]) unless valid_user?
     user.packs << new_pack
   end
 
@@ -26,5 +27,9 @@ class GeneratePack
       @symptoms = Symptom.for(user).to_a
       @symptoms << @symptoms.first while @symptoms.count < 3
       @symptoms
+    end
+
+    def valid_user?
+      user.check_ins.count >= 1
     end
 end
