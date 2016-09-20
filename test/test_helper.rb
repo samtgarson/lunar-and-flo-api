@@ -15,14 +15,16 @@ SimpleCov.formatter = SimpleCov::Formatter::Codecov if ENV['CODECOV_TOKEN']
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
+require 'mocha/mini_test'
 require 'webmock/minitest'
+require 'minitest/reporters'
+
 WebMock.disable_net_connect!(allow_localhost: true)
 
 Dir[Rails.root.join('test/support/**/*.rb')].each { |f| require f }
 
-require 'minitest/reporters'
 Minitest::Reporters.use!(
-  Minitest::Reporters::ProgressReporter.new,
+  Minitest::Reporters::SpecReporter.new,
   ENV,
   Minitest.backtrace_filter
 )

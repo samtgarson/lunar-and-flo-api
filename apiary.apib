@@ -7,7 +7,15 @@ Lunar & Flo API enabling interaction with the L&F server.
 
 ## Client Authentication
 
-Use API Keys to authenticate your client to use this API. **TODO**
+Use your client ID and client secret to sign your API requests _(ask a human for these)_.
+
+To sign your request:
+1. Create a signature in the format:  `'http method,content-type,content-MD5,request URI,timestamp'`
+2. SHA1 HMAC encode the signature using your client secret
+3. Include the canonical string, with your client ID, in the format:
+    `Authorization = APIAuth client ID:encoded signature`
+
+The signed request will expire after 15 mins.
 
 ## Versioning
 
@@ -38,39 +46,6 @@ Check the API's pulse.
 
         {
             "hearbeat": "beep boop"
-        }
-
-
-## Authentication [/auth]
-
-### Authenticate User [POST]
-
-Post to this action to login. 
-It accepts a user's email and password, and returns a JWT which must be attached in the Authorization header of every subsequent request (except `heartbeat`).
-
-+ Request (application/json)
-
-        {
-            "email": "test@example.com",
-            "password": "password"
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "auth_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjZkMDU2ZjMtMTkwZS00ZTQ2LTllNjMtMWI3MTYxMjJlMjg4In0.G-LSkJg8AhpdXEEAakjcQNdFxXse4et8uwdFNvZwU4o",
-            "user": {
-                "id": "26d056f3-190e-4e46-9e63-1b716122e288",
-                "email": "test@example.com"
-            }
-        }
-
-+ Response 401 (application/json)
-
-        {
-            "errors": [
-                "Invalid Username/Password"
-            ]
         }
 
 ## Users [/users/{user_id}]

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
+gem 'api-auth'
 gem 'active_model_serializers'
 gem 'api-pagination'
 gem 'devise'
@@ -38,6 +39,7 @@ group :test do
   gem 'codecov', require: false
   gem 'm', '~> 1.5.0'
   gem 'minitest-reporters'
+  gem 'mocha'
   gem 'simplecov', require: false
   gem 'webmock'
 end

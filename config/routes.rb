@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   root to: 'application#home'
   devise_for :users
   get :heartbeat, to: 'application#heartbeat'
-  post 'auth' => 'authentication#authenticate_user'
 
   mount ForestLiana::Engine => '/forest'
 
