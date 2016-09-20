@@ -13,7 +13,7 @@ class V1::CheckInsControllerTest < ActionDispatch::IntegrationTest
     another_user = create :user
 
     assert_difference('another_user.check_ins.count', +1) do
-      auth_visit :post, user_check_ins_url(user_id: another_user.id), params: check_in_params
+      post user_check_ins_url(user_id: another_user.id), params: check_in_params
     end
 
     assert_equal json_response['symptoms'].count, 2
@@ -24,14 +24,14 @@ class V1::CheckInsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return the current user\'s check ins' do
     2.times { @user.check_ins.create }
-    auth_visit :get, user_check_ins_url(user_id: @user.id)
+    get user_check_ins_url(user_id: @user.id)
 
     assert_equal json_response.count, 2
     assert_response :success
   end
 
   test 'should return failed symptom ids' do
-    auth_visit :post, user_check_ins_url(user_id: @user.id), params: { symptom_ids: ['123'] }
+    post user_check_ins_url(user_id: @user.id), params: { symptom_ids: ['123'] }
 
     assert_equal json_response['invalid_ids'], ['123']
     assert_response :unprocessable_entity
@@ -39,7 +39,7 @@ class V1::CheckInsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return a specific check in' do
     check_in = @user.check_ins.create
-    auth_visit :get, user_check_in_url(user_id: @user.id, id: check_in.id)
+    get user_check_in_url(user_id: @user.id, id: check_in.id)
 
     assert_equal json_response['id'], check_in.id
     assert_response :success

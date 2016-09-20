@@ -3,6 +3,7 @@ require 'test_helper'
 class HomeControllerTest < ActionDispatch::IntegrationTest
   setup do
     @client = create(:api_client)
+    AuthenticateRequest.any_instance.unstub(:authentic_request?)
   end
 
   test 'should return 200 with valid signature' do

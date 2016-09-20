@@ -38,5 +38,6 @@ class ActiveSupport::TestCase
 
   setup do
     mock_http
+    stub_request_authentication
   end
 end

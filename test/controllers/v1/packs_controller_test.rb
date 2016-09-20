@@ -7,20 +7,20 @@ class PacksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    auth_visit :get, user_packs_url(user_id: @user.id)
+    get user_packs_url(user_id: @user.id)
 
     assert_response :success
   end
 
   test 'should get show' do
-    auth_visit :get, user_pack_url(user_id: @user.id, id: @packs.last.id)
+    get user_pack_url(user_id: @user.id, id: @packs.last.id)
 
     assert_equal json_response['id'], @packs.last.id
     assert_response :success
   end
 
   test 'should get latest pack' do
-    auth_visit :get, user_pack_url(user_id: @user.id, id: 'latest')
+    get user_pack_url(user_id: @user.id, id: 'latest')
 
     assert_equal json_response['id'], @packs.first.id
     assert_response :success
