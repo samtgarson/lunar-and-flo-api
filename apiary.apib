@@ -7,7 +7,15 @@ Lunar & Flo API enabling interaction with the L&F server.
 
 ## Client Authentication
 
-Use API Keys to authenticate your client to use this API. **TODO**
+Use your client ID and client secret to sign your API requests _(ask a human for these)_.
+
+To sign your request:
+1. Create a signature in the format:  `'http method,content-type,content-MD5,request URI,timestamp'`
+2. SHA1 HMAC encode the signature using your client secret
+3. Include the canonical string, with your client ID, in the format:
+    `Authorization = APIAuth client ID:encoded signature`
+
+The signed request will expire after 15 mins.
 
 ## Versioning
 
@@ -40,39 +48,6 @@ Check the API's pulse.
             "hearbeat": "beep boop"
         }
 
-
-## Authentication [/auth]
-
-### Authenticate User [POST]
-
-Post to this action to login. 
-It accepts a user's email and password, and returns a JWT which must be attached in the Authorization header of every subsequent request (except `heartbeat`).
-
-+ Request (application/json)
-
-        {
-            "email": "test@example.com",
-            "password": "password"
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "auth_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjZkMDU2ZjMtMTkwZS00ZTQ2LTllNjMtMWI3MTYxMjJlMjg4In0.G-LSkJg8AhpdXEEAakjcQNdFxXse4et8uwdFNvZwU4o",
-            "user": {
-                "id": "26d056f3-190e-4e46-9e63-1b716122e288",
-                "email": "test@example.com"
-            }
-        }
-
-+ Response 401 (application/json)
-
-        {
-            "errors": [
-                "Invalid Username/Password"
-            ]
-        }
-
 ## Users [/users/{user_id}]
 
 
@@ -93,6 +68,22 @@ Get the current user.
 ### Update [PUT]
 
 Update the current user
+
++ Request (application/json)
+
+    + Attributes (User)
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+
+### Create [POST]
+
+Create a user, or retrieve a user if one exists with your Device ID.
+
++ Response 201 (application/json)
+
+    + Attributes (User)
 
 + Request (application/json)
 
@@ -257,6 +248,30 @@ Get a single supplement
 
     + Attributes (Supplement)
 
+## Symptoms [/symptoms]
+
++ Attributes (Symptom)
+
+### All symptoms [GET]
+
+List all symptoms.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Symptom])
+        
+### View symptom [GET /symptoms/{symptom_id}]
+
+Get a single symptom
+
++ Parameters
+
+    + symptom_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the symptom
+
++ Response 200 (application/json)
+
+    + Attributes (Symptom)
+
 ## Data Structures
 
 ### User
@@ -264,6 +279,7 @@ Get a single supplement
 + id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
 + email: `test@example.com` (string, required)
 + name: `Joe Bloggs` (string)
++ device_id: `d6313f56-35bd-4a54-a4b0-184f6942b046` (string) - The unique identifier of the user's device
 
 ### Check In
 

@@ -1,4 +1,4 @@
 FactoryGirl.define do
-  factory :user do
+  factory :api_client do
   end
 end

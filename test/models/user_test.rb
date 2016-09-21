@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    @user = create(:user)
+    @user = create(:user, email: 'a@b.c')
   end
 
   test 'is invalid with a duplicate email' do
