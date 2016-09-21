@@ -248,6 +248,30 @@ Get a single supplement
 
     + Attributes (Supplement)
 
+## Symptoms [/symptoms]
+
++ Attributes (Symptom)
+
+### All symptoms [GET]
+
+List all symptoms.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Symptom])
+        
+### View symptom [GET /symptoms/{symptom_id}]
+
+Get a single symptom
+
++ Parameters
+
+    + symptom_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the symptom
+
++ Response 200 (application/json)
+
+    + Attributes (Symptom)
+
 ## Data Structures
 
 ### User

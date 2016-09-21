@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         resources :packs, only: [:show, :index]
       end
       resources :supplements, only: [:show, :index]
+      resources :symptoms, only: [:show, :index]
     end
   end
 end

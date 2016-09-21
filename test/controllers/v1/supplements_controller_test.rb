@@ -2,7 +2,6 @@ require 'test_helper'
 
 class V1::SupplementsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = create :user
     @supplements = create_list :supplement, 3
   end
 
