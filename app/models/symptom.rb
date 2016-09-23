@@ -7,9 +7,10 @@ class Symptom < ApplicationRecord
   validates :name, :description, :symptom_group, presence: true
 
   class << self
-    def for(user, limit: 3)
-      joins(check_in_symptoms: :check_in)
+    def for_user(user, limit: 3, physical: [true, false])
+      joins(:symptom_group, check_in_symptoms: :check_in)
         .where(check_in_symptoms: { check_ins: { user_id: user.id } })
+        .where(symptom_groups: { physical: physical })
         .group('symptoms.id')
         .order('count(check_in_symptoms.check_in_id) DESC')
         .limit(limit)

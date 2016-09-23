@@ -36,6 +36,7 @@ group :development do
 end
 
 group :test do
+  gem 'bourne'
   gem 'codecov', require: false
   gem 'm', '~> 1.5.0'
   gem 'minitest-reporters'

@@ -24,7 +24,7 @@ class GeneratePack
 
     def symptoms
       return @symptoms if @symptoms
-      @symptoms = Symptom.for(user).to_a
+      @symptoms = Symptom.for_user(user, physical: true).to_a
       @symptoms << @symptoms.first while @symptoms.count < 3
       @symptoms
     end
