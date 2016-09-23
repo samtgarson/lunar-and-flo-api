@@ -286,6 +286,7 @@ Get a single symptom
 + id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
 + lat: `51.507351` (number) - Latitude at time of check in
 + lng: `-0.127758` (number) - Longitude at time of check in
++ score: `-3` (number) - Total score of the check in's symptoms' points
 + symptoms (array[Symptom]) - Array of selected symptoms
 + weather_report (Weather Report) - Attached weather and moon data
 
@@ -293,8 +294,9 @@ Get a single symptom
 
 + id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
 + name: `Headaches` (string, required)
-+ description: `Regular headaches.` (string, required)
-+ group: `Pain` (string, required)
++ description: `Regular headaches.` (string)
++ group: `Pain` (string)
++ points: `1` (number) - The score of this symptom (negative or positive)
 
 ### Supplement Base
 

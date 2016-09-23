@@ -14,4 +14,8 @@ class CheckIn < ApplicationRecord
   def location?
     lat.present? && lng.present?
   end
+
+  def score
+    symptoms.joins(:symptom_group).sum('points')
+  end
 end
