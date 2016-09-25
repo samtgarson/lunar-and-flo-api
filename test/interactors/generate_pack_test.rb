@@ -10,14 +10,14 @@ class GeneratePackTest < ActiveSupport::TestCase
   end
 
   test 'it provides a pack for a user with many check ins' do
-    generate_check_ins(4, @user)
+    generate_check_ins(4, @user, physical: true)
 
     assert successful_context.user.packs.first
     assert_equal 3, successful_context.user.packs.first.effects.count
   end
 
   test 'it provides a pack for a user with 2 symptoms' do
-    generate_check_ins(2, @user)
+    generate_check_ins(2, @user, physical: true)
 
     assert_equal 3, successful_context.user.packs.first.effects.count
   end

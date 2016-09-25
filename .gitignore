@@ -17,3 +17,4 @@
 
 .rubocop-https---*
 coverage
+.tags*

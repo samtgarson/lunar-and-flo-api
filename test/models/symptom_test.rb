@@ -10,9 +10,21 @@ class SymptomTest < ActiveSupport::TestCase
     assert symptom.valid?
   end
 
-  test '#for returns the correct symptoms' do
+  test '#for_user returns the correct symptoms' do
     user = create :user
-    symptoms = generate_check_ins(3, user)
-    assert_equal Symptom.for(user, limit: 2).to_a, [symptoms[0], symptoms[1]]
+
+    physical = create :symptom_group, physical: true
+    mood = create :symptom_group, physical: false
+
+    ps = create_list :symptom, 2, symptom_group: physical
+    ms = create_list :symptom, 2, symptom_group: mood
+
+    (ms + ps).each { |s| check_in(user, s) }
+    3.times { check_in(user, ps[0]) }
+    2.times { check_in(user, ms[0]) }
+
+    assert_equal Symptom.for_user(user, limit: 2).to_a, [ps[0], ms[0]]
+    assert_equal Symptom.for_user(user, limit: 2, physical: true).to_a, ps
+    assert_equal Symptom.for_user(user, limit: 2, physical: false).to_a, ms
   end
 end

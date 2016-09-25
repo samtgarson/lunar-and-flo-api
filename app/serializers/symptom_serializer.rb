@@ -1,5 +1,5 @@
 class SymptomSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :group
+  attributes :id, :name, :description, :points, :icon, :group
 
   def group
     object.symptom_group.name
