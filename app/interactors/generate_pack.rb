@@ -13,12 +13,8 @@ class GeneratePack
   private
 
     def new_pack
-      Pack.new(user: user, effects: effects)
-    end
-
-    def effects
-      @effects ||= symptoms.each_with_object([]) do |symptom, arr|
-        arr << (symptom.effects - arr).sample
+      symptoms.each_with_object(Pack.new(user: user)) do |pack, symptom|
+        EffectFinder.find(pack, symptom)
       end
     end
 

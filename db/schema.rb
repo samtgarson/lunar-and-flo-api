@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160924172457) do
+ActiveRecord::Schema.define(version: 20160925201506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,9 +54,11 @@ ActiveRecord::Schema.define(version: 20160924172457) do
     t.integer "effectiveness_days", default: 30
     t.uuid    "supplement_id"
     t.uuid    "symptom_id"
+    t.uuid    "user_id"
     t.index ["supplement_id", "symptom_id"], name: "index_effects_on_supplement_id_and_symptom_id", unique: true, using: :btree
     t.index ["supplement_id"], name: "index_effects_on_supplement_id", using: :btree
     t.index ["symptom_id"], name: "index_effects_on_symptom_id", using: :btree
+    t.index ["user_id"], name: "index_effects_on_user_id", using: :btree
   end
 
   create_table "effects_packs", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -130,6 +132,7 @@ ActiveRecord::Schema.define(version: 20160924172457) do
   add_foreign_key "check_ins", "weather_reports"
   add_foreign_key "effects", "supplements"
   add_foreign_key "effects", "symptoms"
+  add_foreign_key "effects", "users"
   add_foreign_key "effects_packs", "effects"
   add_foreign_key "effects_packs", "packs"
   add_foreign_key "packs", "users"
