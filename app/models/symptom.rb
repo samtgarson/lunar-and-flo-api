@@ -6,7 +6,7 @@ class Symptom < ApplicationRecord
 
   validates :name, :description, :symptom_group, presence: true
 
-  delegate :points, to: :symptom_group
+  delegate :points, :icon, to: :symptom_group
 
   class << self
     def for_user(user, limit: 3, physical: [true, false])

@@ -29,4 +29,14 @@ class CheckInTest < ActiveSupport::TestCase
 
     assert_equal 6, @check_in.score
   end
+
+  test 'should provide an icon' do
+    happy = create :symptom_group, icon: 'happy'
+    sad = create :symptom_group, icon: 'sad'
+    [happy, happy, sad].each do |group| 
+      CheckInSymptom.create(check_in: @check_in, symptom: create(:symptom, symptom_group: group))
+    end
+
+    assert_equal 'happy', @check_in.icon
+  end
 end

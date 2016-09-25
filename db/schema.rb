@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923154129) do
+ActiveRecord::Schema.define(version: 20160924172457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,12 @@ ActiveRecord::Schema.define(version: 20160923154129) do
     t.float    "lng"
     t.index ["user_id"], name: "index_check_ins_on_user_id", using: :btree
     t.index ["weather_report_id"], name: "index_check_ins_on_weather_report_id", using: :btree
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string   "secret_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "effects", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -83,6 +89,7 @@ ActiveRecord::Schema.define(version: 20160923154129) do
     t.datetime "updated_at",                 null: false
     t.boolean  "physical",   default: false
     t.integer  "points",     default: 0
+    t.string   "icon"
   end
 
   create_table "symptoms", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
