@@ -23,7 +23,7 @@ class CheckInTest < ActiveSupport::TestCase
   test 'should give total score of symptoms' do
     positive = create :symptom_group, points: 4
     negative = create :symptom_group, points: -2
-    [positive, positive, negative].each do |group| 
+    [positive, positive, negative].each do |group|
       CheckInSymptom.create(check_in: @check_in, symptom: create(:symptom, symptom_group: group))
     end
 
@@ -33,7 +33,7 @@ class CheckInTest < ActiveSupport::TestCase
   test 'should provide an icon' do
     happy = create :symptom_group, icon: 'happy'
     sad = create :symptom_group, icon: 'sad'
-    [happy, happy, sad].each do |group| 
+    [happy, happy, sad].each do |group|
       CheckInSymptom.create(check_in: @check_in, symptom: create(:symptom, symptom_group: group))
     end
 

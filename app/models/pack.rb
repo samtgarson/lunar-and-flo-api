@@ -4,5 +4,4 @@ class Pack < ApplicationRecord
   has_many :symptoms, through: :effects
 
   validates :user, presence: true
-  validates :effects, length: { minimum: 3, maximum: 3 }
 end

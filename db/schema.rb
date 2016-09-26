@@ -44,12 +44,6 @@ ActiveRecord::Schema.define(version: 20160925201506) do
     t.index ["weather_report_id"], name: "index_check_ins_on_weather_report_id", using: :btree
   end
 
-  create_table "clients", force: :cascade do |t|
-    t.string   "secret_key"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "effects", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.integer "effectiveness_days", default: 30
     t.uuid    "supplement_id"

@@ -18,6 +18,6 @@ class User < ApplicationRecord
   end
 
   def blacklist!(effect)
-    blacklisted_effects << effects
+    blacklisted_effects << effect
   end
 end

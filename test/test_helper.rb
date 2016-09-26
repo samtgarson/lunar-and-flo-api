@@ -9,6 +9,7 @@ end
 SimpleCov.start 'rails' do
   add_group 'Interactors', 'app/interactors'
   add_group 'Serializers', 'app/serializers'
+  add_group 'Services', 'app/services'
   add_filter 'forest'
 end
 SimpleCov.formatter = SimpleCov::Formatter::Codecov if ENV['CODECOV_TOKEN']

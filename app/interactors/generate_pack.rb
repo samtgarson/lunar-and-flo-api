@@ -7,14 +7,15 @@ class GeneratePack
 
   def call
     context.fail!(errors: ["User #{context.user.id} needs at least one check in."]) unless valid_user?
-    user.packs << new_pack
+    generate_pack!
+    user.packs << generator.pack
   end
 
   private
 
-    def new_pack
-      symptoms.each_with_object(Pack.new(user: user)) do |pack, symptom|
-        EffectFinder.find(pack, symptom)
+    def generate_pack!
+      symptoms.map do |symptom|
+        generator.append_for(symptom)
       end
     end
 
@@ -27,5 +28,9 @@ class GeneratePack
 
     def valid_user?
       user.check_ins.count >= 1
+    end
+
+    def generator
+      @finder ||= PackGenerator.new(user)
     end
 end
