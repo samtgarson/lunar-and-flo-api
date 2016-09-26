@@ -71,7 +71,7 @@ Update the current user
 
 + Request (application/json)
 
-    + Attributes (User)
+    + Attributes (User Attributes)
 
 + Response 200 (application/json)
 
@@ -87,7 +87,7 @@ Create a user, or retrieve a user if one exists with your Device ID.
 
 + Request (application/json)
 
-    + Attributes (User)
+    + Attributes (User Attributes)
 
 + Response 200 (application/json)
 
@@ -115,11 +115,7 @@ Create a check in for a user
 
 + Request
     
-    + Attributes
-        
-        + symptom_ids (array[string], required) - An array of Symptom IDs the user has selected
-        + lat: `51.507351` (number) - Latitude at time of check in
-        + lng: `-0.127758` (number) - Longitude at time of check in
+    + Attributes (Check In Attributes)
 
 + Response 201 (application/json)
 
@@ -274,22 +270,29 @@ Get a single symptom
 
 ## Data Structures
 
-### User
+### User (User Attributes)
 
 + id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
+
+### User Attributes
+
 + email: `test@example.com` (string)
 + name: `Joe Bloggs` (string)
 + device_id: `d6313f56-35bd-4a54-a4b0-184f6942b046` (string) - The unique identifier of the user's device
 
-### Check In
+### Check In (Check In Attributes)
 
 + id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
-+ lat: `51.507351` (number) - Latitude at time of check in
-+ lng: `-0.127758` (number) - Longitude at time of check in
++ weather_report (Weather Report) - Attached weather and moon data
 + score: `-3` (number) - Total score of the check in's symptoms' points
 + icon: `happy` (string) - A short label for this check in's icon
 + symptoms (array[Symptom]) - Array of selected symptoms
-+ weather_report (Weather Report) - Attached weather and moon data
+
+### Check In Attributes
+
++ lat: `51.507351` (number) - Latitude at time of check in
++ lng: `-0.127758` (number) - Longitude at time of check in
++ symptoms (array[string]) - Array of selected symptom IDs
 
 ### Symptom
 
