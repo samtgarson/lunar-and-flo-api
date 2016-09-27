@@ -8,12 +8,12 @@ class GeneratePack
   def call
     context.fail!(errors: ["User #{context.user.id} needs at least one check in."]) unless valid_user?
     generate_pack!
-    user.packs << generator.pack
   end
 
   private
 
     def generate_pack!
+      Pack.create user: user
       symptoms.map do |symptom|
         generator.append_for(symptom)
       end
@@ -31,6 +31,6 @@ class GeneratePack
     end
 
     def generator
-      @finder ||= PackGenerator.new(user)
+      PackGenerator.new(user)
     end
 end
