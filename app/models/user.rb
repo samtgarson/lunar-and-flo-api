@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :check_ins, dependent: :destroy
-  has_many :packs, dependent: :destroy
+  has_many :packs, -> { order 'created_at desc' }, dependent: :destroy
   has_many :blacklisted_effects, class_name: 'Effect', foreign_key: :user_id
 
   validates :email, uniqueness: true, if: 'email.present?'
@@ -14,7 +14,7 @@ class User < ApplicationRecord
   end
 
   def latest_pack
-    packs.order(created_at: :desc).first if packs.any?
+    packs.joins(:effects).group(:id).first
   end
 
   def blacklist!(effect)

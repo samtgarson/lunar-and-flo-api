@@ -1,9 +1,9 @@
 class PackGenerator
   attr_accessor :user, :pack, :symptom
 
-  def initialize(user)
+  def initialize(user, pack)
     @user = user
-    @pack = user.latest_pack
+    @pack = pack
   end
 
   def append_for(symptom)
@@ -42,7 +42,6 @@ class PackGenerator
     end
 
     def first_occurrence_of(effect)
-      # OPTIMIZE: batch this iterator
       previous_packs.reduce(DateTime.current) do |date, pack|
         break date unless pack.effects.include?(effect)
         pack.created_at

@@ -6,14 +6,13 @@ class GeneratePack
   delegate :user, to: :context
 
   def call
-    context.fail!(errors: ["User #{context.user.id} needs at least one check in."]) unless valid_user?
+    context.fail!(errors: ["User #{user.id} needs at least one check in."]) unless valid_user?
     generate_pack!
   end
 
   private
 
     def generate_pack!
-      Pack.create user: user
       symptoms.map do |symptom|
         generator.append_for(symptom)
       end
@@ -31,10 +30,14 @@ class GeneratePack
     end
 
     def after_date
-      user.latest_pack.created_at
+      user.latest_pack.try :created_at
+    end
+
+    def new_pack
+      @new_pack ||= Pack.create user: user
     end
 
     def generator
-      PackGenerator.new(user)
+      PackGenerator.new(user, new_pack)
     end
 end

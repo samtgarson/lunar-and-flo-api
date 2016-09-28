@@ -4,9 +4,9 @@ class PackGeneratorTest < ActiveSupport::TestCase
   setup do
     @user = create(:user)
     @symptom = create(:symptom, supplement_count: 3)
-    Pack.create(user: @user)
+    @pack = Pack.create(user: @user)
 
-    @service = PackGenerator.new(@user)
+    @service = PackGenerator.new(@user, @pack)
   end
 
   test 'appends an effect for an empty pack' do

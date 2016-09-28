@@ -11,10 +11,14 @@ class UserTest < ActiveSupport::TestCase
     assert_not another_user.valid?
   end
 
-  test 'should provide latest pack' do
+  test 'should provide latest pack with effects' do
     packs = create_packs @user, [2.weeks.ago, 1.week.ago]
 
     assert_equal @user.latest_pack, packs.last
+
+    packs.last.update effects: []
+
+    assert_equal @user.latest_pack, packs.first
   end
 
   test 'should provide users who need a new pack' do
