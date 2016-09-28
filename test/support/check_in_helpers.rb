@@ -1,6 +1,7 @@
 module CheckInHelpers
-  def check_in(user, symptom)
-    create :check_in_symptom, check_in: build(:check_in, user: user), symptom: symptom
+  def check_in(user, symptom, check_in_options = {})
+    options = check_in_options.merge user: user
+    create :check_in_symptom, check_in: build(:check_in, options), symptom: symptom
   end
 
   def generate_check_ins(n, user, options = {})

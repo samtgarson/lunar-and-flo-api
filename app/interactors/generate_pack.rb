@@ -21,13 +21,17 @@ class GeneratePack
 
     def symptoms
       return @symptoms if @symptoms
-      @symptoms = Symptom.for_user(user, physical: true).to_a
+      @symptoms = Symptom.for_user(user, physical: true, after_date: after_date).to_a
       @symptoms << @symptoms.first while @symptoms.count < 3
       @symptoms
     end
 
     def valid_user?
       user.check_ins.count >= 1
+    end
+
+    def after_date
+      user.latest_pack.created_at
     end
 
     def generator
