@@ -36,5 +36,6 @@ class SymptomTest < ActiveSupport::TestCase
     check_in user, symptoms[1], created_at: 2.weeks.ago
 
     assert_equal Symptom.for_user(user, limit: 2, after_date: 1.month.ago).to_a, [symptoms[1]]
+    assert_matching Symptom.for_user(user, limit: 2, after_date: nil).to_a, symptoms
   end
 end

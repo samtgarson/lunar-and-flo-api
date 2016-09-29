@@ -42,4 +42,8 @@ class ActiveSupport::TestCase
     mock_http
     stub_request_authentication
   end
+
+  def assert_matching(a1, a2)
+    assert_equal a1.sort, a2.sort
+  end
 end
