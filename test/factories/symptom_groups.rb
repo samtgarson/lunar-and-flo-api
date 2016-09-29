@@ -3,6 +3,6 @@ FactoryGirl.define do
     name { Faker::Hacker.abbreviation }
     physical true
     points { [-1, 1].sample }
-    icon { Faker::SlackEmoji.people }
+    icon { SymptomGroup.icons.keys.sample }
   end
 end

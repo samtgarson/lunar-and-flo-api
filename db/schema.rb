@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20160925201506) do
     t.datetime "updated_at",                 null: false
     t.boolean  "physical",   default: false
     t.integer  "points",     default: 0
-    t.string   "icon"
+    t.integer  "icon"
   end
 
   create_table "symptoms", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|

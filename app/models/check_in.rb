@@ -20,8 +20,14 @@ class CheckIn < ApplicationRecord
   end
 
   def icon
-    result = symptoms.joins(:symptom_group).group(:icon).order('count_icon desc').count(:icon)
-    max = result.values.max
-    result.select { |_k, v| v == max }.keys.sample
+    return unless symptoms.any?
+    max = icon_counts.values.max
+    SymptomGroup.icons.keys[icon_counts.select { |_k, v| v == max }.keys.sample]
   end
+
+  private
+
+    def icon_counts
+      @icon_counts ||= symptoms.joins(:symptom_group).group(:icon).order('count_icon desc').count(:icon)
+    end
 end
