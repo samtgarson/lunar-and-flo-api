@@ -6,30 +6,38 @@ class GeneratePack
   delegate :user, to: :context
 
   def call
-    context.fail!(errors: ["User #{context.user.id} needs at least one check in."]) unless valid_user?
-    user.packs << new_pack
+    context.fail!(errors: ["User #{user.id} needs at least one check in."]) unless valid_user?
+    generate_pack!
   end
 
   private
 
-    def new_pack
-      Pack.new(user: user, effects: effects)
-    end
-
-    def effects
-      @effects ||= symptoms.each_with_object([]) do |symptom, arr|
-        arr << (symptom.effects - arr).sample
+    def generate_pack!
+      symptoms.map do |symptom|
+        generator.append_for(symptom)
       end
     end
 
     def symptoms
       return @symptoms if @symptoms
-      @symptoms = Symptom.for_user(user, physical: true).to_a
+      @symptoms = Symptom.for_user(user, physical: true, after_date: after_date).to_a
       @symptoms << @symptoms.first while @symptoms.count < 3
       @symptoms
     end
 
     def valid_user?
       user.check_ins.count >= 1
+    end
+
+    def after_date
+      user.latest_pack.try :created_at
+    end
+
+    def new_pack
+      @new_pack ||= Pack.create user: user
+    end
+
+    def generator
+      PackGenerator.new(user, new_pack)
     end
 end

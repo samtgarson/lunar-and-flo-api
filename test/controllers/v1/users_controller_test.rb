@@ -4,7 +4,7 @@ class V1::UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = create(:user)
   end
-  
+
   test 'should show user' do
     get user_url(@user)
 
@@ -27,7 +27,7 @@ class V1::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should return an existing user' do
-    user = create(:user, device_id: 'iphone uuid')
+    create(:user, device_id: 'iphone uuid')
     post users_url(device_id: 'iphone uuid')
 
     assert_equal 'iphone uuid', json_response['device_id']

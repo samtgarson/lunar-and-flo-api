@@ -9,6 +9,7 @@ end
 SimpleCov.start 'rails' do
   add_group 'Interactors', 'app/interactors'
   add_group 'Serializers', 'app/serializers'
+  add_group 'Services', 'app/services'
   add_filter 'forest'
 end
 SimpleCov.formatter = SimpleCov::Formatter::Codecov if ENV['CODECOV_TOKEN']
@@ -40,5 +41,9 @@ class ActiveSupport::TestCase
   setup do
     mock_http
     stub_request_authentication
+  end
+
+  def assert_matching(a1, a2)
+    assert_equal a1.sort, a2.sort
   end
 end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :users, except: [:index] do
         resources :check_ins, only: [:create, :index, :show]
         get 'history', to: 'history#index'
+        get 'blacklist', to: 'blacklist#index'
         resources :packs, only: [:show, :index]
       end
       resources :supplements, only: [:show, :index]

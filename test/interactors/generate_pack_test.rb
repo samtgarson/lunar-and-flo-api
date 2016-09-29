@@ -3,22 +3,37 @@ require 'test_helper'
 class GeneratePackTest < ActiveSupport::TestCase
   setup do
     @user = create(:user)
+    @generator = stub(append_for: true, pack: build(:pack))
+    PackGenerator.stubs(:new).returns(@generator)
   end
 
-  def successful_context
-    @successful_context ||= GeneratePack.call(user: @user)
+  def call_context!
+    @context ||= GeneratePack.call(user: @user)
+  end
+
+  def assert_appends_three_times
+    assert_received(@generator, :append_for) { |x| x.times(3) }
   end
 
   test 'it provides a pack for a user with many check ins' do
-    generate_check_ins(4, @user, physical: true)
+    symptoms = generate_check_ins(4, @user, physical: true)
+    Symptom.stubs(:for_user).returns(symptoms.first 3)
+    call_context!
 
-    assert successful_context.user.packs.first
-    assert_equal 3, successful_context.user.packs.first.effects.count
+    assert_appends_three_times
   end
 
-  test 'it provides a pack for a user with 2 symptoms' do
-    generate_check_ins(2, @user, physical: true)
+  test 'it provides a pack for a user with 1 symptom' do
+    symptom = generate_check_ins(1, @user, physical: true)
+    Symptom.stubs(:for_user).returns(symptom)
+    call_context!
 
-    assert_equal 3, successful_context.user.packs.first.effects.count
+    assert_appends_three_times
+  end
+
+  test 'it fails for users with no check ins' do
+    call_context!
+
+    assert @context.failure?
   end
 end

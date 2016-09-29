@@ -15,5 +15,4 @@ class CreateUser
     def new_user
       User.create(device_id: context.device_id)
     end
-
 end

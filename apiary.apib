@@ -36,6 +36,20 @@ Resource indexes are paginated using headers:
 
 Use `page` and `per-page` params to change these values.
 
+## Server Behaviour
+
+### Pack Generation
+
+For each of the 3 inputted symptoms, packs will be generated according to the following rules:
+
+_**Effect:** The join of a supplement to a particular symptom._
+
+1. Try to find an effect from the previous pack to match the symptom, which is not blacklisted and has not outrun it's effectiveness time
+2. If none is found, find a new effect (one the user has not been given previously) which is not blacklisted
+3. As a last resort, choose a previously blacklisted effect (and unblacklist it)
+
+Finally, any effects which have outrun their effectiveness time are added to the user's blacklist.
+
 ## Heartbeat [/heartbeat]
 
 Check the API's pulse.
@@ -134,6 +148,20 @@ Get a single check in
 + Response 200 (application/json)
 
     + Attributes (Check In)
+
+## Blacklisted Effects [/users/{user_id}/blacklist{?before}]
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the user (or `me`)
+
+### View user's blacklist [GET]
+
+When a supplement is recommended for a symptom for longer than it's effectiveness period (i.e., it hasn't worked) it is added to a user's blacklist.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Effect])
 
 ## History [/users/{user_id}/history{?before}]
 
