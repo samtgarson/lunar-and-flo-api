@@ -5,7 +5,7 @@
 
 ## Documentation
 
-View the [API Blueprint](/apiary.apib) or view the [hosted docs](docs.lunarandflo.apiary.io).
+View the [API Blueprint](/apiary.apib) or view the [hosted docs](http://docs.lunarandflo.apiary.io).
 
 ## Admin
 
