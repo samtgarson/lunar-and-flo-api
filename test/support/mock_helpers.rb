@@ -1,6 +1,6 @@
 module MockHelpers
   def mock_http
-    stub_request(:any, %r{https://api.forecast.io/*})
+    stub_request(:any, /api.forecast.io/)
       .to_return(body: forecast_json, status: 200)
   end
 
