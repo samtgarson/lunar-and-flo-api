@@ -10,11 +10,11 @@ class SymptomTest < ActiveSupport::TestCase
     assert symptom.valid?
   end
 
-  test '#for_user returns the correct physical symptoms' do
+  test '#for_user returns the correct categories' do
     user = create :user
 
-    physical = create :symptom_group, physical: true
-    mood = create :symptom_group, physical: false
+    physical = create :symptom_group, category: :physical
+    mood = create :symptom_group, category: :mood
 
     ps = create_list :symptom, 2, symptom_group: physical
     ms = create_list :symptom, 2, symptom_group: mood
@@ -24,8 +24,8 @@ class SymptomTest < ActiveSupport::TestCase
     2.times { check_in(user, ms[0]) }
 
     assert_equal Symptom.for_user(user, limit: 2).to_a, [ps[0], ms[0]]
-    assert_equal Symptom.for_user(user, limit: 2, physical: true).to_a, ps
-    assert_equal Symptom.for_user(user, limit: 2, physical: false).to_a, ms
+    assert_equal Symptom.for_user(user, limit: 2, category: :physical).to_a, ps
+    assert_equal Symptom.for_user(user, limit: 2, category: :mood).to_a, ms
   end
 
   test '#for_user returns the correct symptoms after date' do

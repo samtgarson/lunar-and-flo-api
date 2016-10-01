@@ -81,9 +81,9 @@ ActiveRecord::Schema.define(version: 20160925201506) do
 
   create_table "symptom_groups", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "physical",   default: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "category",   default: 0
     t.integer  "points",     default: 0
     t.integer  "icon"
   end

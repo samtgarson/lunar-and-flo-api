@@ -5,7 +5,7 @@ module CheckInHelpers
   end
 
   def generate_check_ins(n, user, options = {})
-    group = build :symptom_group, physical: options[:physical]
+    group = build :symptom_group
     symptoms = create_list(:symptom, n + 1, supplement_count: 3, symptom_group: group)
 
     (1..n).each do |m|

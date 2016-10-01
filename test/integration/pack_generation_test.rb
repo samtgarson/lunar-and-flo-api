@@ -6,7 +6,7 @@ class PackGenerationTest
     included do
       setup do
         @user = create :user
-        @symptom = create :symptom, supplement_count: 4, symptom_group: create(:symptom_group, physical: true)
+        @symptom = create :symptom, supplement_count: 4, symptom_group: create(:symptom_group, category: :physical)
         @effects = @symptom.effects.to_a
 
         create :check_in, user: @user, symptom_ids: [@symptom.id]
