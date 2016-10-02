@@ -6,9 +6,11 @@ Rails.application.routes.draw do
     api_version(module: 'V1', header: { name: 'Accept', value: 'application/vnd.lunarandflo.api+json; version=1' }, default: true) do
       resources :users, except: [:index] do
         resources :check_ins, only: [:create, :index, :show]
+        resources :packs, only: [:show, :index]
+
         get 'history', to: 'history#index'
         get 'blacklist', to: 'blacklist#index'
-        resources :packs, only: [:show, :index]
+        post 'onboard', to: 'onboard#create'
       end
       resources :supplements, only: [:show, :index]
       resources :symptoms, only: [:show, :index]
