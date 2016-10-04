@@ -1,4 +1,4 @@
-class CreateCheckIn
+class CheckIns::Create
   include Interactor
 
   context_requires user_id: String, symptom_ids: Array

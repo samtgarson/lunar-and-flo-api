@@ -1,4 +1,4 @@
-class GeneratePack
+class Packs::Generate
   include Interactor
 
   context_requires user: User

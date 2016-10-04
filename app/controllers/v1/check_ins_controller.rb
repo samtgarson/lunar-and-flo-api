@@ -26,7 +26,7 @@ module V1
       end
 
       def result
-        @result ||= ProcessCheckIn.call(check_in_params)
+        @result ||= CheckIns::Process.call(check_in_params)
       end
 
       def check_in_params

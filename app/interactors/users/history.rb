@@ -1,4 +1,4 @@
-class UserHistory
+class Users::History
   include Interactor
 
   DATE_FORMAT = '%Y-%m-%d'.freeze

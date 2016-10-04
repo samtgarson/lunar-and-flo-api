@@ -11,15 +11,15 @@ class V1::HistoryControllerTest < ActionDispatch::IntegrationTest
   test 'should get recent history' do
     get user_history_url(user_id: @user.id)
 
-    assert_not json_response[2.days.ago.strftime(UserHistory::DATE_FORMAT)]
-    assert_equal json_response[1.day.ago.strftime(UserHistory::DATE_FORMAT)], CheckInSerializer.new(@check_in).as_json.deep_stringify_keys
+    assert_not json_response[2.days.ago.strftime(Users::History::DATE_FORMAT)]
+    assert_equal json_response[1.day.ago.strftime(Users::History::DATE_FORMAT)], CheckInSerializer.new(@check_in).as_json.deep_stringify_keys
     assert_response :success
   end
 
   test 'it provides a month from a date' do
     get user_history_url(user_id: @user.id, before: 3.months.ago)
 
-    assert_equal json_response.keys.first, 3.months.ago.strftime(UserHistory::DATE_FORMAT)
-    assert_equal json_response.keys.last, (4.months.ago + 1.day).strftime(UserHistory::DATE_FORMAT)
+    assert_equal json_response.keys.first, 3.months.ago.strftime(Users::History::DATE_FORMAT)
+    assert_equal json_response.keys.last, (4.months.ago + 1.day).strftime(Users::History::DATE_FORMAT)
   end
 end

@@ -21,7 +21,7 @@ class PackGenerationTest
     end
 
     def set_result!
-      @result = GeneratePack.call(user: @user)
+      @result = Packs::Generate.call(user: @user)
     end
   end
 

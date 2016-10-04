@@ -1,17 +1,17 @@
 require 'test_helper'
 
-class CreateCheckInTest < ActiveSupport::TestCase
+class CheckIns::CreateTest < ActiveSupport::TestCase
   setup do
     @symptom = create(:symptom)
     @user = create(:user)
   end
 
   def successful_context
-    @successful_context ||= CreateCheckIn.call(user_id: @user.id, symptom_ids: [@symptom.id], lat: 1.0, lng: 1.0)
+    @successful_context ||= CheckIns::Create.call(user_id: @user.id, symptom_ids: [@symptom.id], lat: 1.0, lng: 1.0)
   end
 
   def unsuccessful_context
-    @unsuccessful_context ||= CreateCheckIn.call(user_id: @user.id, symptom_ids: [@symptom.id, 'invalid_id'])
+    @unsuccessful_context ||= CheckIns::Create.call(user_id: @user.id, symptom_ids: [@symptom.id, 'invalid_id'])
   end
 
   test 'it succeeds if symptoms are valid' do

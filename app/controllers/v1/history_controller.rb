@@ -10,7 +10,7 @@ class V1::HistoryController < ApplicationController
   private
 
     def result
-      @result ||= UserHistory.call(user: user, to: before, from: before - 1.month + 1.day)
+      @result ||= Users::History.call(user: user, to: before, from: before - 1.month + 1.day)
     end
 
     def serialized_history
