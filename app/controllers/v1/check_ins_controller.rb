@@ -26,11 +26,11 @@ module V1
       end
 
       def result
-        @result ||= CheckIns::Process.call(check_in_params)
+        @result ||= CheckIns::Process.call check_in_params.merge(user: user)
       end
 
       def check_in_params
-        params.permit(:lat, :lng, symptom_ids: []).merge(user_id: user.id)
+        params.permit(:lat, :lng, symptom_ids: [])
       end
   end
 end
