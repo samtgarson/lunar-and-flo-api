@@ -28,6 +28,9 @@ class CheckInTest < ActiveSupport::TestCase
     end
 
     assert_equal 6, @check_in.score
+
+    @check_in.period = true
+    assert_equal 6 + CheckIn::PERIOD_SCORE, @check_in.score
   end
 
   test 'should provide an icon' do

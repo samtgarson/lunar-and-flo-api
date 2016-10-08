@@ -11,12 +11,14 @@ class CheckIn < ApplicationRecord
 
   scope :on_day, -> (time) { where("date_trunc('day', created_at) = ?", time.to_date) }
 
+  PERIOD_SCORE = -2.freeze
+
   def location?
     lat.present? && lng.present?
   end
 
   def score
-    symptoms.joins(:symptom_group).sum('points')
+    symptoms.joins(:symptom_group).sum('points') + (period? ? PERIOD_SCORE : 0)
   end
 
   def icon
