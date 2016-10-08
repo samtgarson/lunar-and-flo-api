@@ -30,7 +30,7 @@ class V1::OnboardControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create a pack for the user' do
-    assert @user.latest_pack
+    assert @user.latest_pack.present?
   end
 
 end

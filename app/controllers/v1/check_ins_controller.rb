@@ -30,7 +30,7 @@ module V1
       end
 
       def check_in_params
-        params.permit(:lat, :lng, symptom_ids: [])
+        params.permit(:lat, :lng, :period, symptom_ids: [])
       end
   end
 end

@@ -6,7 +6,7 @@ class V1::CheckInsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def check_in_params
-    { symptom_ids: [create(:symptom).id, create(:symptom).id], lat: 1.0, lng: 1.0 }
+    { symptom_ids: [create(:symptom).id, create(:symptom).id], lat: 1.0, lng: 1.0, period: true }
   end
 
   test 'should create check ins for another user' do
@@ -16,8 +16,9 @@ class V1::CheckInsControllerTest < ActionDispatch::IntegrationTest
       post user_check_ins_url(user_id: another_user.id), params: check_in_params
     end
 
-    assert_equal json_response['symptoms'].count, 2
-    assert json_response['lat']
+    assert_equal 2, json_response['symptoms'].count
+    assert_equal 1.0, json_response['lat']
+    assert_equal true, json_response['period']
     assert json_response['weather_report']
     assert_response :success
   end

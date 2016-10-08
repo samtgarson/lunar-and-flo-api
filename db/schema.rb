@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160925201506) do
+ActiveRecord::Schema.define(version: 20161008104148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160925201506) do
     t.datetime "updated_at",        null: false
     t.float    "lat"
     t.float    "lng"
+    t.boolean  "period"
     t.index ["user_id"], name: "index_check_ins_on_user_id", using: :btree
     t.index ["weather_report_id"], name: "index_check_ins_on_weather_report_id", using: :btree
   end
