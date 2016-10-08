@@ -16,3 +16,5 @@
 .env
 
 .rubocop-https---*
+coverage
+.tags*

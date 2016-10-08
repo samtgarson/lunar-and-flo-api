@@ -1,0 +1,367 @@
+FORMAT: 1A
+HOST: http://api.lunarandflo.com
+
+# Lunar & Flo
+
+Lunar & Flo API enabling interaction with the L&F server.
+
+## Client Authentication
+
+Use your client ID and client secret to sign your API requests _(ask a human for these)_.
+
+To sign your request:
+1. Create a signature in the format:  `'http method,content-type,content-MD5,request URI,timestamp'`
+2. SHA1 HMAC encode the signature using your client secret
+3. Include the canonical string, with your client ID, in the format:
+    `Authorization = APIAuth client ID:encoded signature`
+
+The signed request will expire after 15 mins.
+
+## Versioning
+
+Use the `Accept` header to specify which version of a resource you require. E.g.:
+
+`Accept=application/vnd.lunarandflo.api+json; version=1`
+
+_Currently version 1 is the default and only version, so no versioning header is required._
+
+## Pagination
+
+Resource indexes are paginated using headers: 
+
+- `Link` will give relevant links to next, previous, first and last pages of this resource
+- `Page` will give the current page
+- `Per-Page` will give the number of items per page
+- `Total` will give the total number of pages for this resource.
+
+Use `page` and `per-page` params to change these values.
+
+## Server Behaviour
+
+### Pack Generation
+
+For each of the 3 inputted symptoms, packs will be generated according to the following rules:
+
+_**Effect:** The join of a supplement to a particular symptom._
+
+1. Try to find an effect from the previous pack to match the symptom, which is not blacklisted and has not outrun it's effectiveness time
+2. If none is found, find a new effect (one the user has not been given previously) which is not blacklisted
+3. As a last resort, choose a previously blacklisted effect (and unblacklist it)
+
+Finally, any effects which have outrun their effectiveness time are added to the user's blacklist.
+
+## Heartbeat [/heartbeat]
+
+Check the API's pulse.
+
+### Check Heartbeat [GET]
+
++ Response 200 (application/json)
+
+        {
+            "hearbeat": "beep boop"
+        }
+
+## Users [/users/{user_id}]
+
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string) - The ID of the user (or `me`)
+    
++ Attributes(User)
+
+### Me [GET]
+
+Get the current user.
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+    
+### Update [PUT]
+
+Update the current user
+
++ Request (application/json)
+
+    + Attributes (User Attributes)
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+
+### Create [POST]
+
+Create a user, or retrieve a user if one exists with your Device ID.
+
++ Response 201 (application/json)
+
+    + Attributes (User)
+
++ Request (application/json)
+
+    + Attributes (User Attributes)
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+        
+## Check Ins [/users/{user_id}/check_ins]
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string) - The ID of the user (or `me`)
+
++ Attributes (Check In)
+
+### All user check ins [GET]
+
+List all user check ins.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Check In])
+    
+### Create check in [POST]
+
+Create a check in for a user
+
++ Request
+    
+    + Attributes (Check In Attributes)
+
++ Response 201 (application/json)
+
+    + Attributes (Check In)
+        
+### View check in [GET /users/{user_id}/check_ins/{check_in_id}]
+
+Get a single check in
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the user (or `me`)
+
+    + check_in_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the check in
+
++ Response 200 (application/json)
+
+    + Attributes (Check In)
+
+### View check in history [GET /users/{user_id}/history{?before}]
+
+View a month of a user's check in history
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the user (or `me`)
+       
+    + before: `2016-01-01` (string, optional) - The latest date to include
+
++ Response 200 (application/json)
+
+        {
+            "2016-09-14":null,
+            "2016-09-13":{
+                "id":"18d9895f-95c2-4441-b574-85cb7953e012",
+                "lat":1.01,
+                "lng":-51.4,
+                "symptoms": [],
+                "weather_report":null
+            },
+            "2016-09-12":null,
+            "2016-09-11":null,
+            "2016-09-10":null,
+            "2016-09-09":null,
+            "2016-09-08":null,
+            "2016-09-07":null,
+            "2016-09-06":null,
+            "2016-09-05":null,
+            "2016-09-04":null,
+            "2016-09-03":null,
+            "2016-09-02":null,
+            "2016-09-01":null,
+            "2016-08-31":null,
+            "2016-08-30":null,
+            "2016-08-29":null,
+            "2016-08-28":null,
+            "2016-08-27":null,
+            "2016-08-26":null,
+            "2016-08-25":null,
+            "2016-08-24":null,
+            "2016-08-23":null,
+            "2016-08-22":null,
+            "2016-08-21":null,
+            "2016-08-20":null,
+            "2016-08-19":null,
+            "2016-08-18":null,
+            "2016-08-17":null,
+            "2016-08-16":null,
+            "2016-08-15":null
+        }
+
+## Blacklisted Effects [/users/{user_id}/blacklisted_effects{?before}]
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the user (or `me`)
+
+### View user's blacklist [GET]
+
+When a supplement is recommended for a symptom for longer than it's effectiveness period (i.e., it hasn't worked) it is added to a user's blacklist.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Effect])
+
+## Packs [/users/{user_id}/packs]
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string) - The ID of the user (or `me`)
+
++ Attributes (Pack)
+
+### All user packs [GET]
+
+List a user's packs in descending chronological order.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Pack])
+
+### View pack [GET /users/{user_id}/packs/{pack_id}]
+
+Get a single pack
+
++ Parameters
+
+    + user_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the user (or `me`)
+
+    + pack_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the pack (or `latest` for the user's latest pack)
+
++ Response 200 (application/json)
+
+    + Attributes (Pack)
+
+## Supplements [/supplements]
+
++ Attributes (Supplement)
+
+### All supplements [GET]
+
+List all supplements.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Supplement])
+        
+### View supplement [GET /supplements/{supplement_id}]
+
+Get a single supplement
+
++ Parameters
+
+    + supplement_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the supplement
+
++ Response 200 (application/json)
+
+    + Attributes (Supplement)
+
+## Symptoms [/symptoms]
+
++ Attributes (Symptom)
+
+### All symptoms [GET]
+
+List all symptoms.
+
++ Response 200 (application/json)
+
+    + Attributes (array[Symptom])
+        
+### View symptom [GET /symptoms/{symptom_id}]
+
+Get a single symptom
+
++ Parameters
+
+    + symptom_id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required) - The ID of the symptom
+
++ Response 200 (application/json)
+
+    + Attributes (Symptom)
+
+## Data Structures
+
+### User (User Attributes)
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
+
+### User Attributes
+
++ email: `test@example.com` (string)
++ name: `Joe Bloggs` (string)
++ device_id: `d6313f56-35bd-4a54-a4b0-184f6942b046` (string) - The unique identifier of the user's device
+
+### Check In (Check In Attributes)
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
++ weather_report (Weather Report) - Attached weather and moon data
++ score: `-3` (number) - Total score of the check in's symptoms' points
++ icon: `happy` (string) - A short label for this check in's icon
++ symptoms (array[Symptom]) - Array of selected symptoms
+
+### Check In Attributes
+
++ lat: `51.507351` (number) - Latitude at time of check in
++ lng: `-0.127758` (number) - Longitude at time of check in
++ period: `false` (boolean) - Flag if the user is on her period
++ symptoms (array[string]) - Array of selected symptom IDs
+
+### Symptom
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
++ name: `Headaches` (string, required)
++ description: `Regular headaches.` (string)
++ group: `Pain` (string)
++ points: `1` (number) - The score of this symptom (negative or positive)
++ icon: `happy` (string) - A short label for this symptom's icon
+
+### Supplement Base
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
++ name: `Magnesium` (string, required)
++ description: `Contributes to the maintenance of normal bones and teeth. Magnesium also contributes to the reduction of tiredness and fatigue.` (string, required)
+
+### Supplement (Supplement Base)
+
++ effects (array[Effect Base]) - Effects that this supplement has
+
+### Effect Base
+
++ effectiveness_days: `21` (number, required) - The number of days this supplement requires to notice effect, on average
++ symptom (Symptom) - The symptom this supplement effects
+
+### Effect (Effect Base)
+
++ supplement (Supplement Base) - The supplement this effect is describing
+
+### Pack
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
++ created_at: `2016-09-15T20:10:31.971Z` (string, required)
++ effects (array[Effect])
+
+### Weather Report
+
++ id: `26d056f3-190e-4e46-9e63-1b716122e288` (string, required)
++ icon: `clear-day` (string) - Short label for current conditions
++ cloud_cover: `0.5` (number) - Fraction cloud cover between 0 and 1
++ moon_phase: `0.5` (number) - Fraction moon phase between 0 and 1
++ temperature: `15` (number) - Temperature in ºC
++ precip_probability: `0.5` (number) - Likelihood of precipitation between 0 and 1
++ precip_type: `rain` (string) - Precipitation type (if precipitation probabality is more than 0)
++ lat: `51.507351` (number) - Latitude at position of weather report
++ lng: `-0.127758` (number) - Longitude at position of weather report
