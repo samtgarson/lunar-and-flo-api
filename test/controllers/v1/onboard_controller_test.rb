@@ -24,13 +24,11 @@ class V1::OnboardControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create a check in for periods' do
-    skip('Need to write an interactor for dealing with periods')
     assert_equal @onboard_attributes[:period_length], @user.check_ins.where('created_at < ?', 1.day.ago).where('created_at > ?', 13.days.ago).count
-    assert_equal @onboard_attributes[:period_length], @user.check_ins.where('created_at < ?', 13.day.ago).count
+    assert_equal @onboard_attributes[:period_length], @user.check_ins.where('created_at < ?', 13.days.ago).count
   end
 
   test 'should create a pack for the user' do
     assert @user.latest_pack.present?
   end
-
 end

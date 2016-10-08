@@ -11,7 +11,7 @@ class CheckIn < ApplicationRecord
 
   scope :on_day, -> (time) { where("date_trunc('day', created_at) = ?", time.to_date) }
 
-  PERIOD_SCORE = -2.freeze
+  PERIOD_SCORE = -2
 
   def location?
     lat.present? && lng.present?

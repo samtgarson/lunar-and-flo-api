@@ -1,7 +1,7 @@
 class CheckIns::Create
   include Interactor
 
-  context_requires user: User, symptom_ids: Array #lat: Float, lng: Float, period: Boolean
+  context_requires user: User, symptom_ids: Array # lat: Float, lng: Float, period: Boolean
 
   def call
     if failed_check_in_symptoms.any?
