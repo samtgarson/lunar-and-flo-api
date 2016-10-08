@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GeneratePackTest < ActiveSupport::TestCase
+class Packs::GenerateTest < ActiveSupport::TestCase
   setup do
     @user = create(:user)
     @generator = stub(append_for: true, pack: build(:pack))
@@ -8,7 +8,7 @@ class GeneratePackTest < ActiveSupport::TestCase
   end
 
   def call_context!
-    @context ||= GeneratePack.call(user: @user)
+    @context ||= Packs::Generate.call(user: @user)
   end
 
   def assert_appends_three_times
@@ -16,7 +16,7 @@ class GeneratePackTest < ActiveSupport::TestCase
   end
 
   test 'it provides a pack for a user with many check ins' do
-    symptoms = generate_check_ins(4, @user, physical: true)
+    symptoms = generate_check_ins(4, @user)
     Symptom.stubs(:for_user).returns(symptoms.first 3)
     call_context!
 
@@ -24,7 +24,7 @@ class GeneratePackTest < ActiveSupport::TestCase
   end
 
   test 'it provides a pack for a user with 1 symptom' do
-    symptom = generate_check_ins(1, @user, physical: true)
+    symptom = generate_check_ins(1, @user)
     Symptom.stubs(:for_user).returns(symptom)
     call_context!
 

@@ -1,7 +1,7 @@
-class CreateCheckIn
+class CheckIns::Create
   include Interactor
 
-  context_requires user_id: String, symptom_ids: Array
+  context_requires user: User, symptom_ids: Array # lat: Float, lng: Float, period: Boolean
 
   def call
     if failed_check_in_symptoms.any?
@@ -19,7 +19,7 @@ class CreateCheckIn
   private
 
     def check_in
-      @check_in ||= CheckIn.create(user_id: context.user_id, lat: context.lat, lng: context.lng)
+      @check_in ||= CheckIn.create(user_id: context.user.id, lat: context.lat, lng: context.lng, period: context.period)
     end
 
     def check_in_symptoms

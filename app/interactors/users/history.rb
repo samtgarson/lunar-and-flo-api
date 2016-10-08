@@ -1,9 +1,14 @@
-class UserHistory
+class Users::History
   include Interactor
 
   DATE_FORMAT = '%Y-%m-%d'.freeze
 
   context_requires :from, :to, user: User
+
+  before do
+    context.from = context.from.to_date
+    context.to = context.to.to_date
+  end
 
   def call
     context.history = check_ins
@@ -18,14 +23,6 @@ class UserHistory
     end
 
     def days
-      @days ||= (from..to).to_a.reverse
-    end
-
-    def from
-      context.from.to_date
-    end
-
-    def to
-      context.to.to_date
+      @days ||= (context.from..context.to).to_a.reverse
     end
 end

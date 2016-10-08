@@ -1,4 +1,4 @@
-class AttachCheckInMetaData
+class CheckIns::AttachMetaData
   include Interactor
 
   context_requires check_in: CheckIn

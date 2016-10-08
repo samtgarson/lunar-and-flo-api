@@ -1,4 +1,4 @@
-class CreateUser
+class Users::Create
   include Interactor
 
   def call

@@ -29,7 +29,7 @@ module V1
       end
 
       def create_service
-        @create_service ||= CreateUser.call(user_params)
+        @create_service ||= Users::Create.call(user_params)
       end
 
       def create_status

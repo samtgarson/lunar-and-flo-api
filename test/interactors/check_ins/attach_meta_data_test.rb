@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class AttachCheckInMetaDataTest < ActiveSupport::TestCase
+class CheckIns::AttachMetaDataTest < ActiveSupport::TestCase
   setup do
     @check_in = create :check_in, :with_location, user: create(:user)
   end
 
   def successful_context
-    @successful_context ||= AttachCheckInMetaData.call(check_in: @check_in)
+    @successful_context ||= CheckIns::AttachMetaData.call(check_in: @check_in)
   end
 
   def forecast_data
